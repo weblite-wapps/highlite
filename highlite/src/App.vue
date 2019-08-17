@@ -1,36 +1,28 @@
 <template>
   <v-app>
-    <v-app-bar app>
-      <v-toolbar-title class="headline text-uppercase">
-        <span>Vuetify</span>
-        <span class="font-weight-light">MATERIAL DESIGN</span>
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn
-        text
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-      >
-        <span class="mr-2">Latest Release</span>
-      </v-btn>
-    </v-app-bar>
-
-    <v-content>
-      <HelloWorld/>
-    </v-content>
+    <!-- <AppBar /> -->
+    <!-- <ToolBar /> -->
+    <v-btn flat color="grey">
+      <span>Sign Out</span>
+      <v-icon right>exit_to_app</v-icon>
+    </v-btn>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
-
+import AppBar from "./components/AppBar";
+import ToolBar from "./components/ToolBar";
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld,
+    AppBar,
+    ToolBar
   },
   data: () => ({
     //
-  }),
+  })
 };
 </script>
+
+
+
