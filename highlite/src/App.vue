@@ -1,27 +1,33 @@
 <template>
   <v-app>
-    <!-- <AppBar /> -->
-    <!-- <ToolBar /> -->
-    <v-btn flat color="grey">
-      <span>Sign Out</span>
-      <v-icon right>exit_to_app</v-icon>
-    </v-btn>
+    <v-content>
+      <AppBar />
+      <ToolBar />
+      <Editor />
+    </v-content>
   </v-app>
 </template>
 
+
 <script>
-import AppBar from "./components/AppBar";
-import ToolBar from "./components/ToolBar";
+// <Drawer />
+import AppBar from './components/TheAppBar'
+import ToolBar from './components/TheToolBar'
+import Drawer from './components/TheDrawer'
+import Editor from './components/Editor'
+import store from './store'
 export default {
-  name: "App",
+  name: 'App',
+  store,
   components: {
     AppBar,
-    ToolBar
+    ToolBar,
+    Drawer,
+    Editor,
   },
-  data: () => ({
-    //
-  })
-};
+  data: () => ({}),
+  methods: {},
+}
 </script>
 
 
