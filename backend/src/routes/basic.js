@@ -1,5 +1,5 @@
 module.exports = ({ router }) => {
-  router.get('/', (ctx, next) => {
+  router.post('/', (ctx, next) => {
     console.log('hello')
     // console.log(ctx)
     console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
