@@ -17,7 +17,8 @@ import ToolBar from './components/TheToolBar'
 import Drawer from './components/TheDrawer'
 import Editor from './components/Editor'
 import store from './store'
-import { saveNote } from './helpers/requestHandler'
+import { save, fetch } from './helpers/requestHandler'
+import { mapState, mapMutations } from 'vuex'
 export default {
   name: 'App',
   store,
@@ -28,9 +29,19 @@ export default {
     Editor,
   },
   data: () => ({}),
+  computed: mapState(['wisId', 'userId', 'text', 'content']),
+  created() {
+    this.fetch()
+  },
   methods: {
+    ...mapMutations(['setEditorDatas']),
     save() {
-      saveNote('This is a temp note ').then(res => console.log(res))
+      save(this.wisId, this.userId, this.text, this.content).then(res =>
+        console.log(res),
+      )
+    },
+    fetch() {
+      fetch(this.wisId).then(this.setEditorDatas)
     },
   },
 }

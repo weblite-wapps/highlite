@@ -5,11 +5,13 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    wisId: 'wis1',
+    userId: 'user1',
     colorPanelIsOpen: false,
     hedingPanelIsOpen: false,
     drawerIsOpen: false,
-    editorText: '',
-    editorContent: null,
+    text: '',
+    content: null,
     editorRange: {},
     event: '',
     editorFormats: {},
@@ -28,14 +30,23 @@ export default new Vuex.Store({
       state.editorRange = { index, length }
     },
     addEvent(state, type) {
+      console.log('event ', type)
       state.event = type
-      // TODO : THIS IS DANGEROUS IT MIGHT BE SOONER THAN THE WATCHER FOR EVENT TO WORK
+
+      //TODO: THIS IS DANGEROUS IT MIGHT BE SOONER THAN THE WATCHER FOR EVENT TO WORK
       setTimeout(() => {
         state.event = ''
       }, 500)
     },
     setEditorFormats(state, formats) {
       state.editorFormats = formats
+    },
+    setEditorDatas(state, data) {
+      // console.log('data', data)
+      // console.log('11', data.text)
+      // console.log('22', data.content)
+      state.text = data.text
+      state.content = data.content
     },
   },
 

@@ -2,7 +2,7 @@
 const sqlite3 = require('sqlite3')
 
 // connection to db
-let db = new sqlite3.Database(
+const db = new sqlite3.Database(
   './data.db',
   sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE,
   err => {
@@ -13,17 +13,14 @@ let db = new sqlite3.Database(
   },
 )
 
-db.run(`INSERT INTO notes(title) VALUES(?)`, ['C'], function(err) {
-  if (err) {
-    return console.log(err.message)
-  }
-  // get the last insert id
-  console.log(`A row has been inserted with rowid ${this.lastID}`)
-})
+// db.run('drop table note', (err, message) => {})
+// db.run('CREATE TABLE note(wisId, userId, text, content)')
 
-db.close(err => {
-  if (err) {
-    return console.error(err.message)
-  }
-  console.log('Close the database connection.')
-})
+// db.close(err => {
+//   if (err) {
+//     return console.error(err.message)
+//   }
+//   console.log('Close the database connection.')
+// })
+
+module.exports = { db }

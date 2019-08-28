@@ -14,6 +14,10 @@ const logger = require('koa-logger')
 const cors = require('@koa/cors')
 app.use(cors())
 
+// bodyParser
+const bodyParser = require('koa-bodyparser')
+app.use(bodyParser())
+
 // db
 // app.context.db = db()
 

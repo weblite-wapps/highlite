@@ -8,16 +8,22 @@
       <v-btn small fab dark color="#BEBEBE" @click="() => this.addEvent('italic')">
         <v-icon mx-10>format_italic</v-icon>
       </v-btn>
-      <v-btn small fab dark color="#BEBEBE">
+      <v-btn small fab dark color="#BEBEBE" @click="() => this.addEvent('underline')">
         <v-icon>format_underlined</v-icon>
       </v-btn>
       <v-btn small fab color="#BEBEBE" @click="this.toggleColorPanel">
         <v-icon>fiber_manual_record</v-icon>
       </v-btn>
-      <v-btn small fab dark color="#BEBEBE">
+      <v-btn small fab dark color="#BEBEBE" @click="() => this.addEvent({list: 'bullet'})">
         <v-icon>list</v-icon>
       </v-btn>
-      <v-btn small fab dark color="#BEBEBE">
+      <v-btn
+        small
+        fab
+        dark
+        color="#BEBEBE"
+        @click="() => this.addEvent({link: 'https://google.com'})"
+      >
         <v-icon>insert_link</v-icon>
       </v-btn>
       <v-btn small fab dark color="#BEBEBE" @click="this.toggleHeadingPanel">
