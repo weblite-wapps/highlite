@@ -1,17 +1,62 @@
 <template>
-  <div ref="editor">sa;slm;f mslfndlfnl ldnfldnk</div>
+  <div>
+    <div ref="toolbar">
+      <v-container flat>
+        <!-- <v-layout justify-space-between> -->
+        <v-btn class="ql-bold" small fab dark color="#BEBEBE">
+          <v-icon>format_bold</v-icon>
+        </v-btn>
+        <v-btn class="ql-italic" small fab dark color="#BEBEBE">
+          <v-icon mx-10>format_italic</v-icon>
+        </v-btn>
+        <v-btn class="ql-underline" small fab dark color="#BEBEBE">
+          <v-icon>format_underlined</v-icon>
+        </v-btn>
+        <v-btn small fab color="#BEBEBE" @click="this.toggleColorPanel">
+          <v-icon>fiber_manual_record</v-icon>
+        </v-btn>
+        <v-btn class="ql-list" small fab dark color="#BEBEBE">
+          <v-icon>list</v-icon>
+        </v-btn>
+        <v-btn
+          small
+          fab
+          dark
+          color="#BEBEBE"
+          @click="() => this.addEvent({link: 'https://google.com'})"
+        >
+          <v-icon>insert_link</v-icon>
+        </v-btn>
+        <v-btn small fab dark color="#BEBEBE" @click="this.toggleHeadingPanel">
+          <v-icon>headset</v-icon>
+        </v-btn>
+        <!-- </v-layout> -->
+      </v-container>
+    </div>
+    <div ref="editor">sa;slm;f mslfndlfnl ldnfldnk</div>
+  </div>
 </template>
 
 <script>
 import Quill from 'quill'
 import { mapState, mapMutations } from 'vuex'
+var BackgroundClass = Quill.import('attributors/class/background')
+var ColorClass = Quill.import('attributors/class/color')
+var SizeStyle = Quill.import('attributors/style/size')
+Quill.register(BackgroundClass, true)
+Quill.register(ColorClass, true)
+Quill.register(SizeStyle, true)
 export default {
   data: () => ({
     editor: null,
   }),
   props: {},
   mounted() {
-    this.editor = new Quill(this.$refs.editor, {})
+    this.editor = new Quill(this.$refs.editor, {
+      modules: {
+        toolbar: this.$refs.toolbar,
+      },
+    })
     this.editor.on('text-change', () =>
       this.setEditorDatas({
         text: this.editor.getText(),
