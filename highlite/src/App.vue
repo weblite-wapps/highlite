@@ -31,7 +31,7 @@ export default {
   data: () => ({}),
   computed: mapState(['wisId', 'userId', 'text', 'content']),
   created() {
-    this.fetch()
+    // this.fetch()
   },
   methods: {
     ...mapMutations(['setEditorDatas']),

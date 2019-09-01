@@ -2,13 +2,13 @@
   <div>
     <v-container flat>
       <!-- <v-layout justify-space-between> -->
-      <v-btn small fab dark color="#BEBEBE" @click="() => this.addEvent('bold')">
+      <v-btn small fab dark color="#BEBEBE" @click="() => this.emit('bold')">
         <v-icon>format_bold</v-icon>
       </v-btn>
-      <v-btn small fab dark color="#BEBEBE" @click="() => this.addEvent('italic')">
+      <v-btn small fab dark color="#BEBEBE" @click="() => this.emit('italic')">
         <v-icon mx-10>format_italic</v-icon>
       </v-btn>
-      <v-btn small fab dark color="#BEBEBE" @click="() => this.addEvent('underline')">
+      <v-btn small fab dark color="#BEBEBE" @click="() => this.emit('underline')">
         <v-icon>format_underlined</v-icon>
       </v-btn>
       <v-btn small fab color="#BEBEBE" @click="this.toggleColorPanel">
@@ -36,12 +36,17 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex'
+import { eventBus } from './bus'
+import { newEvent } from '../helpers/typesUtils'
 export default {
-  data: () => ({ isDark: true }),
   props: {},
   methods: {
     ...mapMutations(['toggleColorPanel', 'toggleHeadingPanel', 'addEvent']),
+    emit(event) {
+      eventBus.$emit(newEvent, event)
+    },
   },
+  mounted() {},
   computed: {
     ...mapState(['editorFormats']),
     // TODO: THIS ISBOLD SHOULD BE ADDED TO EVERY ELMENTS

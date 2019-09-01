@@ -13,7 +13,6 @@ export default new Vuex.Store({
     text: '',
     content: null,
     editorRange: {},
-    event: '',
     editorFormats: {},
   },
   mutations: {
@@ -28,15 +27,6 @@ export default new Vuex.Store({
     },
     updateCursorPosition(state, { index, length }) {
       state.editorRange = { index, length }
-    },
-    addEvent(state, type) {
-      console.log('event ', type)
-      state.event = type
-
-      //TODO: THIS IS DANGEROUS IT MIGHT BE SOONER THAN THE WATCHER FOR EVENT TO WORK
-      setTimeout(() => {
-        state.event = ''
-      }, 500)
     },
     setEditorFormats(state, formats) {
       state.editorFormats = formats

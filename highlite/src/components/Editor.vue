@@ -4,6 +4,8 @@
 
 <script>
 import Quill from 'quill'
+import { eventBus } from './bus'
+import { newEvent } from '../helpers/typesUtils'
 import { mapState, mapMutations } from 'vuex'
 export default {
   data: () => ({
@@ -28,7 +30,11 @@ export default {
     // )
 
     this.editor.on('selection-change', pos => this.handlePositionChange(pos))
+    eventBus.$on(newEvent, payload => {
+      this.handleEvent(payload)
+    })
   },
+
   methods: {
     ...mapMutations([
       'updateCursorPosition',
@@ -41,39 +47,14 @@ export default {
         this.updateCursorPosition(pos)
       }
     },
-  },
-  computed: mapState([
-    'text',
-    'content',
-    'editorRange',
-    'event',
-    'editorFormats',
-  ]),
-  watch: {
-    event() {
+
+    handleEvent(event) {
       const { index, length } = this.editorRange
-      this.editor.formatText(
-        index,
-        length,
-        this.event,
-        !this.editorFormats[this.event],
-      )
+      this.editor.formatText(index, length, event, !this.editorFormats[event])
       this.setEditorFormats(this.editor.getFormat(index, length))
     },
-    text() {
-      // this.editor.setText(this.text)
-      // this.editor.setContents(this.content)
-      // console.log('this.content ', this.content)
-    },
-    content() {
-      // this.editor.setText(this.text)
-      // this.editor.setContents(this.content)
-      // console.log('this.text ', this.text)
-      // console.log('this.content ', this.content)
-      // console.log('this.content ', typeof this.content)
-      // console.log('this.content ', JSON.stringify(this.content))
-    },
   },
+  computed: mapState(['text', 'content', 'editorRange', 'editorFormats']),
 }
 </script>
 
