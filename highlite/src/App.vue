@@ -19,6 +19,8 @@ import Editor from './components/Editor'
 import store from './store'
 import { save, fetch } from './helpers/requestHandler'
 import { mapState, mapMutations } from 'vuex'
+import { eventBus } from './components/bus'
+import { setInitialData } from './helpers/typesUtils'
 export default {
   name: 'App',
   store,
@@ -31,17 +33,19 @@ export default {
   data: () => ({}),
   computed: mapState(['wisId', 'userId', 'text', 'content']),
   created() {
-    // this.fetch()
+    this.fetch()
   },
   methods: {
-    ...mapMutations(['setEditorDatas']),
     save() {
-      save(this.wisId, this.userId, this.text, this.content).then(res =>
-        console.log(res),
-      )
+      save(
+        this.wisId,
+        this.userId,
+        this.text,
+        JSON.stringify(this.content),
+      ).then(res => console.log(res))
     },
     fetch() {
-      fetch(this.wisId).then(this.setEditorDatas)
+      fetch(this.wisId).then(res => eventBus.$emit(setInitialData, res))
     },
   },
 }

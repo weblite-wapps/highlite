@@ -1,17 +1,16 @@
 <template>
-  <div ref="editor">sa;slm;f mslfndlfnl ldnfldnk</div>
+  <div ref="editor"></div>
 </template>
 
 <script>
 import Quill from 'quill'
 import { eventBus } from './bus'
-import { newEvent } from '../helpers/typesUtils'
+import { newEvent, setInitialData } from '../helpers/typesUtils'
 import { mapState, mapMutations } from 'vuex'
 export default {
   data: () => ({
     editor: null,
   }),
-  props: {},
   mounted() {
     this.editor = new Quill(this.$refs.editor, {})
     this.editor.on('text-change', () =>
@@ -20,16 +19,15 @@ export default {
         content: this.editor.getContents().ops,
       }),
     )
+
     if (this.editor.getText().length === 1) this.editor.focus()
 
-    // this.editor.once('text-change', () =>
-    //   this.setEditorDatas({
-    //     text: this.editor.getText(),
-    //     content: this.editor.getContents().ops,
-    //   }),
-    // )
-
     this.editor.on('selection-change', pos => this.handlePositionChange(pos))
+
+    eventBus.$on(setInitialData, payload => {
+      this.insertText(payload)
+    })
+
     eventBus.$on(newEvent, payload => {
       this.handleEvent(payload)
     })
@@ -47,7 +45,11 @@ export default {
         this.updateCursorPosition(pos)
       }
     },
-
+    insertText(payload) {
+      console.log('payload', payload)
+      this.editor.setText(payload.text)
+      this.editor.setContents(JSON.parse(payload.content))
+    },
     handleEvent(event) {
       const { index, length } = this.editorRange
       this.editor.formatText(index, length, event, !this.editorFormats[event])
