@@ -1,9 +1,11 @@
-<template >
-  <v-app>
-    <v-content>
-      <AppBar />
+<template  >
+  <v-app class="app">
+    <v-content class="content">
+      <CustomizeToolbar />
+      <AppBar :save="save" />
       <ToolBar />
       <Editor />
+      <Drawer />
       <v-btn @click="save">save</v-btn>
     </v-content>
   </v-app>
@@ -16,6 +18,7 @@ import AppBar from './components/TheAppBar'
 import ToolBar from './components/TheToolBar'
 import Drawer from './components/TheDrawer'
 import Editor from './components/Editor'
+import CustomizeToolbar from './components/TheCustomizeToolbar'
 import store from './store'
 import { save, fetch } from './helpers/requestHandler'
 import { mapState, mapMutations } from 'vuex'
@@ -29,9 +32,10 @@ export default {
     ToolBar,
     Drawer,
     Editor,
+    CustomizeToolbar,
   },
   data: () => ({}),
-  computed: mapState(['wisId', 'userId', 'text', 'content']),
+  computed: mapState(['wisId', 'userId', 'text', 'content', 'drawerIsOpen']),
   created() {
     this.fetch()
   },
@@ -53,3 +57,19 @@ export default {
 
 
 
+
+<style  scoped>
+.app {
+  top: 0px;
+  left: 0px;
+  width: 375px;
+  height: 100%;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border: 1px solid red;
+  opacity: 1;
+}
+
+.content {
+  margin-left: 18px;
+}
+</style>

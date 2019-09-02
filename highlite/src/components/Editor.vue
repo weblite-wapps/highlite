@@ -46,7 +46,7 @@ export default {
       }
     },
     insertText(payload) {
-      console.log('payload', payload)
+      if (!payload.text) return
       this.editor.setText(payload.text)
       this.editor.setContents(JSON.parse(payload.content))
     },

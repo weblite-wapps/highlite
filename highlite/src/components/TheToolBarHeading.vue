@@ -3,7 +3,7 @@
     <v-row no-gutters>
       <v-col cols="3">
         <v-btn height="40" width="40" fab dark color="#BEBEBE">
-          <v-icon mr-1>menu</v-icon>
+          <v-icon @click="this.toggleDrawer" mr-1>menu</v-icon>
         </v-btn>
       </v-col>
 
@@ -21,11 +21,14 @@
   </v-container>
 </template>
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 export default {
   data: () => ({}),
   props: {},
   computed: mapState(['hedingPanelIsOpen']),
+  methods: {
+    ...mapMutations(['toggleDrawer']),
+  },
 }
 </script>
 
