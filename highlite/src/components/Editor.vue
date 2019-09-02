@@ -1,38 +1,33 @@
 <template>
   <div>
-    <div ref="toolbar">
-      <v-container flat>
-        <!-- <v-layout justify-space-between> -->
-        <v-btn class="ql-bold" small fab dark color="#BEBEBE">
-          <v-icon>format_bold</v-icon>
-        </v-btn>
-        <v-btn class="ql-italic" small fab dark color="#BEBEBE">
-          <v-icon mx-10>format_italic</v-icon>
-        </v-btn>
-        <v-btn class="ql-underline" small fab dark color="#BEBEBE">
-          <v-icon>format_underlined</v-icon>
-        </v-btn>
-        <v-btn small fab color="#BEBEBE" @click="this.toggleColorPanel">
-          <v-icon>fiber_manual_record</v-icon>
-        </v-btn>
-        <v-btn class="ql-list" value="bullet" small fab dark color="#BEBEBE">
-          <v-icon>list</v-icon>
-        </v-btn>
-        <v-btn
-          small
-          fab
-          dark
-          color="#BEBEBE"
-          @click="() => this.addEvent({link: 'https://google.com'})"
-        >
-          <v-icon>insert_link</v-icon>
-        </v-btn>
-        <v-btn small fab dark color="#BEBEBE" @click="this.toggleHeadingPanel">
-          <v-icon>headset</v-icon>
-        </v-btn>
-        <!-- </v-layout> -->
-      </v-container>
+    <div class="new-toolbar" ref="toolbar">
+      <button class="toolbar-btn">
+        <img src="../../public/004-header.svg" />
+      </button>
+      <button class="toolbar-btn ql-bold">
+        <img src="../../public/002-bold-text-option.svg" />
+      </button>
+      <button class="toolbar-btn ql-italic">
+        <img src="../../public/001-italicize-text.svg" />
+      </button>
+
+      <button class="toolbar-btn ql-underline">
+        <img src="../../public/003-underline-text-option.svg" />
+      </button>
+
+      <button class="toolbar-btn">
+        <div class="inner-color"/>
+      </button>
+
+      <button class="toolbar-btn ql-list" value="bullet">
+        <img src="../../public/006-list-1.svg" />
+      </button>
+
+      <button class="toolbar-btn ql-link">
+        <img src="../../public/007-link.svg" />
+      </button>
     </div>
+    <v-divider></v-divider>
     <div ref="editor">sa;slm;f mslfndlfnl ldnfldnk</div>
   </div>
 </template>
@@ -106,4 +101,35 @@ export default {
 </script>
 
 <style  scoped>
+.new-toolbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin: 10px 0;
+}
+.toolbar-btn {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  background: #bebebe 0% 0% no-repeat padding-box;
+  opacity: 1;
+  display: inline-block;
+}
+.inner-color{
+  position: relative;
+  left: 11px;
+  height: 19px;
+  width: 19px;
+  border-radius: 50%;
+  background-color: black;
+}
+.ql-active{
+  background-color: #FFB100;
+}
+button:focus {outline:0;}
+
+.toolbar-btn img {
+  margin-top: 6px;
+}
+
 </style>

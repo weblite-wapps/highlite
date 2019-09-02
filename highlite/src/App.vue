@@ -2,7 +2,7 @@
   <v-app>
     <v-content>
       <AppBar />
-      <ToolBar />
+      <!-- <ToolBar /> -->
       <Editor />
       <v-btn @click="save">save</v-btn>
     </v-content>
