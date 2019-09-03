@@ -1,14 +1,14 @@
 <template  >
-  <v-app class="app">
-    <v-content class="content">
+  <div class="app">
+    <div class="content">
       <CustomizeToolbar />
       <AppBar :save="save" />
       <ToolBar />
       <Editor />
       <Drawer />
       <v-btn @click="save">save</v-btn>
-    </v-content>
-  </v-app>
+    </div>
+  </div>
 </template>
 
 
@@ -37,7 +37,7 @@ export default {
   data: () => ({}),
   computed: mapState(['wisId', 'userId', 'text', 'content', 'drawerIsOpen']),
   created() {
-    this.fetch()
+    // this.fetch()
   },
   methods: {
     save() {
@@ -63,7 +63,7 @@ export default {
   top: 0px;
   left: 0px;
   width: 375px;
-  height: 100%;
+  height: 100vh;
   background: #ffffff 0% 0% no-repeat padding-box;
   border: 1px solid red;
   opacity: 1;
@@ -71,5 +71,8 @@ export default {
 
 .content {
   margin-left: 18px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 </style>

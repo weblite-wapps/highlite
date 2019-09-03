@@ -1,5 +1,54 @@
 <template>
-  <div ref="editor"></div>
+  <div class="editor-panel">
+    <div ref="scrollingContainer">
+      <div ref="editor">
+        1111111
+        11111111
+        11111111
+        11111111
+        11111111
+        11111111
+        1111111
+        11111111
+        11111111
+        11111111
+        11111111
+        111111111111111
+        11111111
+        11111111
+        11111111
+        11111111
+        111111111111111
+        11111111
+        11111111
+        11111111
+        11111111
+        111111111111111
+        11111111
+        11111111
+        11111111
+        11111111
+        111111111111111
+        11111111
+        11111111
+        11111111
+        11111111
+        111111111111111
+        11111111
+        11111111
+        11111111
+        11111111
+        111111111111111
+        11111111
+        11111111
+        11111111
+        11111111
+        111111111111111
+        11111111
+        11111111
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -12,7 +61,9 @@ export default {
     editor: null,
   }),
   mounted() {
-    this.editor = new Quill(this.$refs.editor, {})
+    this.editor = new Quill(this.$refs.editor, {
+      scrollingContainer: this.$refs.scrollingContainer,
+    })
     this.editor.on('text-change', () =>
       this.setEditorDatas({
         text: this.editor.getText(),
@@ -31,6 +82,14 @@ export default {
     eventBus.$on(newEvent, payload => {
       this.handleEvent(payload)
     })
+
+    this.editor.setSelection(1100, 1150)
+    this.editor.focus()
+    console.log(
+      'this.editor.scrollingContainer: ',
+      this.editor.scrollingContainer,
+    )
+    this.editor.scrollingContainer.scrollTop = 200
   },
 
   methods: {
@@ -61,4 +120,9 @@ export default {
 </script>
 
 <style  scoped>
+.editor-panel {
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
 </style>
