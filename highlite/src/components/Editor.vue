@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="new-toolbar" ref="toolbar">
+    <div class="toolbar-container" ref="toolbar">
       <button class="toolbar-btn">
         <img src="../../public/004-header.svg" />
       </button>
@@ -16,7 +16,11 @@
       </button>
 
       <button class="toolbar-btn" @click="this.toggleColorPanel">
-        <div v-if="this.foramtformatColor" class="inner-color" :style="{ 'background-color': this.foramtformatColor }"></div>
+        <div
+          v-if="this.foramtformatColor"
+          class="inner-color"
+          :style="{ 'background-color': this.foramtformatColor }"
+        ></div>
         <div class="inner-color" v-else></div>
       </button>
 
@@ -29,6 +33,7 @@
       </button>
     </div>
     <ToolBarColors />
+    <ToolBarLink />
     <v-divider></v-divider>
     <div ref="editor">sa;slm;f mslfndlfnl ldnfldnk</div>
   </div>
@@ -39,7 +44,8 @@ import Quill from 'quill'
 import { newEvent, setInitialData, formatColor } from '../helpers/typesUtils'
 import { mapState, mapMutations } from 'vuex'
 import ToolBarColors from './TheToolBarColors'
-import {eventBus} from './bus'
+import ToolBarLink from './TheToolBarLink'
+import { eventBus } from './bus'
 var BackgroundClass = Quill.import('attributors/class/background')
 var ColorClass = Quill.import('attributors/class/color')
 var SizeStyle = Quill.import('attributors/style/size')
@@ -49,6 +55,7 @@ Quill.register(SizeStyle, true)
 export default {
   components: {
     ToolBarColors,
+    ToolBarLink
   },
   data: () => ({
     editor: null,
@@ -59,6 +66,10 @@ export default {
         toolbar: this.$refs.toolbar,
       },
     })
+
+    var toolbar = this.editor.getModule('toolbar')
+    toolbar.addHandler('link', this.handleLinkPanel)
+
     this.editor.on('text-change', () =>
       this.setEditorDatas({
         text: this.editor.getText(),
@@ -66,7 +77,7 @@ export default {
       }),
     )
 
-    if (this.editor.getText().length === 1) this.editor.focus()
+    // if (this.editor.getText().length === 1) this.editor.focus()
 
     this.editor.on('selection-change', pos => this.handlePositionChange(pos))
 
@@ -87,13 +98,24 @@ export default {
   methods: {
     ...mapMutations([
       'toggleColorPanel',
+      'toggleLinkPanel',
       'updateCursorPosition',
       'setEditorFormats',
-        'setEditorDatas',
+      'setEditorDatas',
     ]),
-    log(){
+    log() {
       console.log(this.editor.getFormat())
       this.editor.format('color', 'red')
+    },
+    handleLinkPanel(value) {
+      if (value) {
+        // var href = prompt('Enter the URL shitttt')
+        // this.quill.format('link', href)
+        this.toggleLinkPanel()
+        
+      } else {
+        this.quill.format('link', false)
+      }
     },
     handlePositionChange(pos) {
       if (pos) {
@@ -113,18 +135,18 @@ export default {
     },
   },
   computed: {
-  ...mapState(['text', 'content', 'editorRange', 'editorFormats']),
-  foramtformatColor(){
-    if (!this.editor) return
-    var color = this.editor.getFormat().color;
-    return color? color:null; 
-  }
+    ...mapState(['text', 'content', 'editorRange', 'editorFormats']),
+    foramtformatColor() {
+      if (!this.editor) return
+      var color = this.editor.getFormat().color
+      return color ? color : null
+    },
   },
 }
 </script>
 
 <style  scoped>
-.new-toolbar {
+.toolbar-container {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
@@ -150,11 +172,13 @@ export default {
 .ql-active {
   background-color: #ffb100;
 }
+
 button:focus {
   outline: 0;
 }
 
-.toolbar-btn img {
+/* to fix svg icons positions */
+.toolbar-btn img { 
   margin-top: 6px;
 }
 </style>

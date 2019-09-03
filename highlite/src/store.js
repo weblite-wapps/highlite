@@ -8,6 +8,7 @@ export default new Vuex.Store({
     wisId: 'wis1',
     userId: 'user1',
     colorPanelIsOpen: false,
+    linkPanelIsOpen: false,
     hedingPanelIsOpen: false,
     drawerIsOpen: false,
     text: '',
@@ -18,6 +19,9 @@ export default new Vuex.Store({
   mutations: {
     toggleColorPanel(state) {
       state.colorPanelIsOpen = !state.colorPanelIsOpen
+    },
+    toggleLinkPanel(state) {
+      state.linkPanelIsOpen = !state.linkPanelIsOpen
     },
     toggleHeadingPanel(state) {
       state.hedingPanelIsOpen = !state.hedingPanelIsOpen
