@@ -2,4 +2,4 @@ export const newEvent = 'newEvent'
 
 export const setInitialData = 'setInitialData'
 
-export const backgroundColor = 'backgroundColor'
+export const formatColor = 'formatColor'

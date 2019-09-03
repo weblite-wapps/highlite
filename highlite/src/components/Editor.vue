@@ -16,8 +16,8 @@
       </button>
 
       <button class="toolbar-btn" @click="this.toggleColorPanel">
-        <div v-if="this.foramtBackgroundColor" class="inner-color" :style="{ 'background-color': this.foramtBackgroundColor }"></div>
-        <span v-else>?</span>
+        <div v-if="this.foramtformatColor" class="inner-color" :style="{ 'background-color': this.foramtformatColor }"></div>
+        <div class="inner-color" v-else></div>
       </button>
 
       <button class="toolbar-btn ql-list" value="bullet">
@@ -36,7 +36,7 @@
 
 <script>
 import Quill from 'quill'
-import { newEvent, setInitialData, backgroundColor } from '../helpers/typesUtils'
+import { newEvent, setInitialData, formatColor } from '../helpers/typesUtils'
 import { mapState, mapMutations } from 'vuex'
 import ToolBarColors from './TheToolBarColors'
 import {eventBus} from './bus'
@@ -78,8 +78,8 @@ export default {
       this.handleEvent(payload)
     })
 
-    eventBus.$on(backgroundColor, payload => {
-      this.editor.format('color', payload.color.toLowerCase())
+    eventBus.$on(formatColor, payload => {
+      this.editor.format('color', payload.color)
       console.log(this.editor.getFormat())
     })
   },
@@ -114,7 +114,7 @@ export default {
   },
   computed: {
   ...mapState(['text', 'content', 'editorRange', 'editorFormats']),
-  foramtBackgroundColor(){
+  foramtformatColor(){
     if (!this.editor) return
     var color = this.editor.getFormat().color;
     return color? color:null; 
@@ -144,6 +144,7 @@ export default {
   height: 19px;
   width: 19px;
   border-radius: 50%;
+  background-color: black;
 }
 
 .ql-active {
