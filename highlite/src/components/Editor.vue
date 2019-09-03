@@ -15,8 +15,9 @@
         <img src="../../public/003-underline-text-option.svg" />
       </button>
 
-      <button class="toolbar-btn">
-        <div class="inner-color"/>
+      <button class="toolbar-btn" @click="this.toggleColorPanel">
+        <div v-if="this.foramtBackgroundColor" class="inner-color" :style="{ 'background-color': this.foramtBackgroundColor }"></div>
+        <span v-else>?</span>
       </button>
 
       <button class="toolbar-btn ql-list" value="bullet">
@@ -27,6 +28,7 @@
         <img src="../../public/007-link.svg" />
       </button>
     </div>
+    <ToolBarColors />
     <v-divider></v-divider>
     <div ref="editor">sa;slm;f mslfndlfnl ldnfldnk</div>
   </div>
@@ -34,9 +36,10 @@
 
 <script>
 import Quill from 'quill'
-import { eventBus } from './bus'
-import { newEvent, setInitialData } from '../helpers/typesUtils'
+import { newEvent, setInitialData, backgroundColor } from '../helpers/typesUtils'
 import { mapState, mapMutations } from 'vuex'
+import ToolBarColors from './TheToolBarColors'
+import {eventBus} from './bus'
 var BackgroundClass = Quill.import('attributors/class/background')
 var ColorClass = Quill.import('attributors/class/color')
 var SizeStyle = Quill.import('attributors/style/size')
@@ -44,6 +47,9 @@ Quill.register(BackgroundClass, true)
 Quill.register(ColorClass, true)
 Quill.register(SizeStyle, true)
 export default {
+  components: {
+    ToolBarColors,
+  },
   data: () => ({
     editor: null,
   }),
@@ -71,14 +77,24 @@ export default {
     eventBus.$on(newEvent, payload => {
       this.handleEvent(payload)
     })
+
+    eventBus.$on(backgroundColor, payload => {
+      this.editor.format('color', payload.color.toLowerCase())
+      console.log(this.editor.getFormat())
+    })
   },
 
   methods: {
     ...mapMutations([
+      'toggleColorPanel',
       'updateCursorPosition',
       'setEditorFormats',
-      'setEditorDatas',
+        'setEditorDatas',
     ]),
+    log(){
+      console.log(this.editor.getFormat())
+      this.editor.format('color', 'red')
+    },
     handlePositionChange(pos) {
       if (pos) {
         this.setEditorFormats(this.editor.getFormat(pos.index, pos.length))
@@ -96,7 +112,14 @@ export default {
       this.setEditorFormats(this.editor.getFormat(index, length))
     },
   },
-  computed: mapState(['text', 'content', 'editorRange', 'editorFormats']),
+  computed: {
+  ...mapState(['text', 'content', 'editorRange', 'editorFormats']),
+  foramtBackgroundColor(){
+    if (!this.editor) return
+    var color = this.editor.getFormat().color;
+    return color? color:null; 
+  }
+  },
 }
 </script>
 
@@ -115,21 +138,22 @@ export default {
   opacity: 1;
   display: inline-block;
 }
-.inner-color{
+.inner-color {
   position: relative;
   left: 11px;
   height: 19px;
   width: 19px;
   border-radius: 50%;
-  background-color: black;
 }
-.ql-active{
-  background-color: #FFB100;
+
+.ql-active {
+  background-color: #ffb100;
 }
-button:focus {outline:0;}
+button:focus {
+  outline: 0;
+}
 
 .toolbar-btn img {
   margin-top: 6px;
 }
-
 </style>
