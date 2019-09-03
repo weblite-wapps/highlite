@@ -17,9 +17,9 @@
 
       <button class="toolbar-btn" @click="this.toggleColorPanel">
         <div
-          v-if="this.foramtformatColor"
+          v-if="this.formatColor"
           class="inner-color"
-          :style="{ 'background-color': this.foramtformatColor }"
+          :style="{ 'background-color': this.formatColor }"
         ></div>
         <div class="inner-color" v-else></div>
       </button>
@@ -41,7 +41,7 @@
 
 <script>
 import Quill from 'quill'
-import { newEvent, setInitialData, formatColor } from '../helpers/typesUtils'
+import { newEvent, setInitialData, formatColor, formatLink } from '../helpers/typesUtils'
 import { mapState, mapMutations } from 'vuex'
 import ToolBarColors from './TheToolBarColors'
 import ToolBarLink from './TheToolBarLink'
@@ -55,7 +55,7 @@ Quill.register(SizeStyle, true)
 export default {
   components: {
     ToolBarColors,
-    ToolBarLink
+    ToolBarLink,
   },
   data: () => ({
     editor: null,
@@ -91,7 +91,10 @@ export default {
 
     eventBus.$on(formatColor, payload => {
       this.editor.format('color', payload.color)
-      console.log(this.editor.getFormat())
+    })
+
+    eventBus.$on(formatLink, payload => {
+      this.editor.format('link', payload.link)
     })
   },
 
@@ -103,18 +106,14 @@ export default {
       'setEditorFormats',
       'setEditorDatas',
     ]),
-    log() {
-      console.log(this.editor.getFormat())
-      this.editor.format('color', 'red')
-    },
     handleLinkPanel(value) {
       if (value) {
-        // var href = prompt('Enter the URL shitttt')
+        //override below functionality
+        // var href = prompt('Enter the URL')
         // this.quill.format('link', href)
         this.toggleLinkPanel()
-        
       } else {
-        this.quill.format('link', false)
+        this.editor.format('link', false)
       }
     },
     handlePositionChange(pos) {
@@ -136,7 +135,7 @@ export default {
   },
   computed: {
     ...mapState(['text', 'content', 'editorRange', 'editorFormats']),
-    foramtformatColor() {
+    formatColor() {
       if (!this.editor) return
       var color = this.editor.getFormat().color
       return color ? color : null
@@ -178,7 +177,7 @@ button:focus {
 }
 
 /* to fix svg icons positions */
-.toolbar-btn img { 
+.toolbar-btn img {
   margin-top: 6px;
 }
 </style>

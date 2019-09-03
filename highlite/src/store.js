@@ -18,9 +18,11 @@ export default new Vuex.Store({
   },
   mutations: {
     toggleColorPanel(state) {
+      state.linkPanelIsOpen = false
       state.colorPanelIsOpen = !state.colorPanelIsOpen
     },
     toggleLinkPanel(state) {
+      state.colorPanelIsOpen = false
       state.linkPanelIsOpen = !state.linkPanelIsOpen
     },
     toggleHeadingPanel(state) {

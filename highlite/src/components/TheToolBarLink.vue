@@ -2,11 +2,11 @@
   <div>
     <template v-if="linkPanelIsOpen">
       <div class="link-container">
-        <input class="text-field" type="text" placeholder="Enter Your Link" />
-        <button class="toolbar-btn">
+        <input v-model="currentLink" class="text-field" type="text" placeholder="Enter Your Link" />
+        <button class="toolbar-btn" @click="() => this.emitLink({link: this.currentLink})">
           <img src="../../public/tik.svg" />
         </button>
-        <button class="toolbar-btn">
+        <button class="toolbar-btn" @click="this.toggleLinkPanel">
           <img src="../../public/close.svg" />
         </button>
       </div>
@@ -17,11 +17,19 @@
 <script>
 import { mapState, mapMutations } from 'vuex'
 import { eventBus } from './bus'
+import { formatLink } from '../helpers/typesUtils'
 export default {
   computed: mapState(['linkPanelIsOpen']),
-  data: () => ({}),
+  methods: {
+    ...mapMutations(['toggleLinkPanel']),
+    emitLink(event) {
+      eventBus.$emit(formatLink, event)
+    },
+  },
+  data: () => ({
+    currentLink: '',
+  }),
   props: {},
-  methods: {},
 }
 </script>
 
