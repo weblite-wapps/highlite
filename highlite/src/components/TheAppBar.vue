@@ -46,10 +46,9 @@ export default {
 <style  scoped>
 .c--appBar {
   display: flex;
-  margin-top: 16px;
+  margin: 16px 17px 15px 0px;
   height: 50px;
-  width: 340px;
-  margin-right: 18px;
+  width: 100%;
 }
 
 .c--appBar-icon-panel {
@@ -65,7 +64,7 @@ export default {
 .c--appBar-header-panel {
   background-color: #ffb100;
   font-size: 20px;
-  width: 290px;
+  width: 100%;
   height: 40px;
   border-radius: 25px;
   margin-left: 10px;

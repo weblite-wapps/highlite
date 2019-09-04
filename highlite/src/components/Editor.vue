@@ -1,7 +1,7 @@
 <template>
   <div>
     <editor-menu-bar :editor="editor" v-slot="{ commands, isActive }">
-      <div class="rows-container">
+      <div>
         <div class="toolbar-container" ref="toolbar">
           <button class="toolbar-btn" @click="toggleHeadingPanel">
             <img src="../../public/004-header.svg" />
@@ -42,12 +42,16 @@
             <img src="../../public/006-list-1.svg" />
           </button>
 
-          <button class="toolbar-btn ql-link" @click="toggleLinkPanel">
+          <button
+            class="toolbar-btn ql-link"
+            @click="toggleLinkPanel"
+            :class="{ 'active': isActive.link() }"
+          >
             <img src="../../public/007-link.svg" />
           </button>
         </div>
         <ToolBarColors />
-        <ToolBarHeading />
+        <ToolBarHeading :commands="commands" />
       </div>
     </editor-menu-bar>
     <ToolBarLink />

@@ -1,9 +1,9 @@
 <template >
   <div v-if="this.headingPanelIsOpen" class="heading-container">
-    <button class="toolbar-btn">
+    <button class="toolbar-btn" @click="this.toggleDrawer">
       <img src="../../public/menu.svg" />
     </button>
-    <button class="stretched-toolbar-btn">ADD</button>
+    <button class="stretched-toolbar-btn" @click="commands.heading({ level: 2 })">ADD</button>
     <button class="stretched-toolbar-btn">PREV</button>
     <button class="stretched-toolbar-btn">NEXT</button>
   </div>
@@ -12,7 +12,9 @@
 import { mapState, mapMutations } from 'vuex'
 export default {
   data: () => ({}),
-  props: {},
+  props: {
+    commands: Object,
+  },
   computed: mapState(['headingPanelIsOpen']),
   methods: {
     ...mapMutations(['toggleDrawer']),

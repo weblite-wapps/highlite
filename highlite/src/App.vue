@@ -7,7 +7,6 @@
         <!-- <ToolBar /> -->
         <Editor />
         <Drawer />
-        <v-btn @click="save">save</v-btn>
       </div>
     </div>
   </v-app>
@@ -62,7 +61,7 @@ export default {
 .app {
   top: 0px;
   left: 0px;
-  width: 375px;
+  width: 100%;
   height: 100vh;
   background: #ffffff 0% 0% no-repeat padding-box;
   border: 1px solid red;

@@ -45,7 +45,6 @@ export default new Vuex.Store({
       state.headingPanelIsOpen = !state.headingPanelIsOpen
     },
     toggleDrawer(state) {
-      console.log('drawer changed')
       state.drawerIsOpen = !state.drawerIsOpen
     },
     updateCursorPosition(state, { index, length }) {

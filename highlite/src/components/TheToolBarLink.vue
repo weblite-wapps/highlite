@@ -1,14 +1,14 @@
 <template>
   <div v-if="this.linkPanelIsOpen">
-      <div class="link-container">
-        <input v-model="currentLink" class="text-field" type="text" placeholder="Enter Your Link" />
-        <button class="toolbar-btn" @click="() => this.emitLink({link: this.currentLink})">
-          <img src="../../public/tik.svg" />
-        </button>
-        <button class="toolbar-btn" @click="this.toggleLinkPanel">
-          <img src="../../public/close.svg" />
-        </button>
-      </div>
+    <div class="link-container">
+      <input v-model="currentLink" class="text-field" type="text" placeholder="Enter Your Link" />
+      <button class="toolbar-btn" @click="() => this.commands.link({href: this.currentLink})">
+        <img src="../../public/tik.svg" />
+      </button>
+      <button class="toolbar-btn" @click="this.toggleLinkPanel">
+        <img src="../../public/close.svg" />
+      </button>
+    </div>
   </div>
 </template>
 
@@ -27,7 +27,9 @@ export default {
   data: () => ({
     currentLink: '',
   }),
-  props: {},
+  props: {
+    commands: Object,
+  },
 }
 </script>
 
