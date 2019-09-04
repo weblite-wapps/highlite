@@ -1,14 +1,16 @@
 <template  >
-  <div class="app">
-    <div class="content">
-      <CustomizeToolbar />
-      <AppBar :save="save" />
-      <ToolBar />
-      <Editor />
-      <Drawer />
-      <v-btn @click="save">save</v-btn>
+  <v-app>
+    <div class="app">
+      <div class="content">
+        <CustomizeToolbar />
+        <AppBar :save="save" />
+        <!-- <ToolBar /> -->
+        <Editor />
+        <Drawer />
+        <v-btn @click="save">save</v-btn>
+      </div>
     </div>
-  </div>
+  </v-app>
 </template>
 
 

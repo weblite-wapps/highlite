@@ -1,6 +1,6 @@
 <template >
   <div v-if="this.headingPanelIsOpen" class="heading-container">
-    <button class="toolbar-btn" @click="this.toggleLinkPanel">
+    <button class="toolbar-btn">
       <img src="../../public/menu.svg" />
     </button>
     <button class="stretched-toolbar-btn" >ADD</button>

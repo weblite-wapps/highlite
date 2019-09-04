@@ -36,10 +36,9 @@
     <ToolBarLink />
     <ToolBarHeading />
     <v-divider></v-divider>
-  <div class="editor-panel">
-    <div ref="scrollingContainer">
-      <div ref="editor">
-      lsdfkm lkdfmlkd kldmf
+    <div class="editor-panel">
+      <div ref="scrollingContainer">
+        <div ref="editor">lsdfkm lkdfmlkd kldmf</div>
       </div>
     </div>
   </div>
@@ -47,7 +46,12 @@
 
 <script>
 import Quill from 'quill'
-import { newEvent, setInitialData, formatColor, formatLink } from '../helpers/typesUtils'
+import {
+  newEvent,
+  setInitialData,
+  formatColor,
+  formatLink,
+} from '../helpers/typesUtils'
 import { mapState, mapMutations } from 'vuex'
 import ToolBarColors from './TheToolBarColors'
 import ToolBarLink from './TheToolBarLink'
@@ -63,7 +67,7 @@ export default {
   components: {
     ToolBarColors,
     ToolBarLink,
-    ToolBarHeading
+    ToolBarHeading,
   },
   data: () => ({
     editor: null,
@@ -155,7 +159,7 @@ export default {
 </script>
 
 <style  scoped>
-.rows-container{
+.rows-container {
   padding: 0 10px;
 }
 .toolbar-container {
