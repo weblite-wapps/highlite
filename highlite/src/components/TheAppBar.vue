@@ -1,21 +1,93 @@
 <template>
-  <nav>
-    <v-app-bar dark app>
-      <v-app-bar-nav-icon></v-app-bar-nav-icon>
-      <v-toolbar-title class="headline text-uppercase">
-        <span class="font-weight-light">HIGHLITE</span>
-      </v-toolbar-title>
-    </v-app-bar>
-  </nav>
+  <div class="c--appBar">
+    <div class="c--appBar-icon-panel">
+      <img class="c--appBar-icon" src="a.svg" alt />
+    </div>
+    <div class="c--appBar-header-panel">
+      <div class="c--appBar-header">HIGHLITE</div>
+      <v-menu transition="slide-y-transition" bottom>
+        <template v-slot:activator="{ on }">
+          <div class="c--appBar-header-moreTools" v-on="on">
+            <img src="3dot-vertical.svg" alt />
+          </div>
+        </template>
+        <v-list>
+          <v-list-item @click="()=> {}">
+            <v-list-item-title>Send</v-list-item-title>
+          </v-list-item>
+          <v-list-item @click="()=> this.setCustomizeIsOpen(true)">
+            <v-list-item-title>Customize Toolbar</v-list-item-title>
+          </v-list-item>
+          <v-list-item @click="()=> {}">
+            <v-list-item-title>Font Sizes</v-list-item-title>
+          </v-list-item>
+          <v-list-item @click="save">
+            <v-list-item-title>Save</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
+    </div>
+  </div>
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 export default {
-  data: () => ({})
-};
+  data: () => ({}),
+  props: {
+    save: Function,
+  },
+  methods: {
+    ...mapMutations(['setCustomizeIsOpen']),
+  },
+}
 </script>
 
 <style  scoped>
 .c--appBar {
+  display: flex;
+  margin-top: 16px;
+  height: 50px;
+  width: 340px;
+  margin-right: 18px;
+}
+
+.c--appBar-icon-panel {
+  width: 40px;
+  height: 40px;
+  background-color: #fd7500;
+  border-radius: 25px;
+}
+
+.c--appBar-icon {
+}
+
+.c--appBar-header-panel {
+  background-color: #ffb100;
+  font-size: 20px;
+  width: 290px;
+  height: 40px;
+  border-radius: 25px;
+  margin-left: 10px;
+  /* margin-top: 18px; */
+  display: flex;
+}
+
+.c--appBar-header {
+  width: 115px;
+  height: 26px;
+  color: white;
+  letter-spacing: 4px;
+  font: Bold 20px/26px Roboto;
+  text-align: left;
+  margin-left: 16px;
+  margin-top: 6px;
+  margin-bottom: 8px;
+}
+
+.c--appBar-header-moreTools {
+  cursor: pointer;
+  margin-right: 14.27px;
+  margin-left: auto;
 }
 </style>

@@ -36,7 +36,12 @@
     <ToolBarLink />
     <ToolBarHeading />
     <v-divider></v-divider>
-    <div ref="editor">sa;slm;f mslfndlfnl ldnfldnk</div>
+  <div class="editor-panel">
+    <div ref="scrollingContainer">
+      <div ref="editor">
+      lsdfkm lkdfmlkd kldmf
+      </div>
+    </div>
   </div>
 </template>
 
@@ -68,6 +73,7 @@ export default {
       modules: {
         toolbar: this.$refs.toolbar,
       },
+      scrollingContainer: this.$refs.scrollingContainer,
     })
 
     var toolbar = this.editor.getModule('toolbar')
@@ -127,7 +133,7 @@ export default {
       }
     },
     insertText(payload) {
-      console.log('payload', payload)
+      if (!payload.text) return
       this.editor.setText(payload.text)
       this.editor.setContents(JSON.parse(payload.content))
     },
@@ -186,5 +192,10 @@ button:focus {
 /* to fix svg icons positions */
 .toolbar-btn img {
   margin-top: 6px;
+}
+.editor-panel {
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 </style>

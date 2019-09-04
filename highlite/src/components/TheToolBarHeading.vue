@@ -9,11 +9,14 @@
   </div>
 </template>
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 export default {
   data: () => ({}),
   props: {},
   computed: mapState(['headingPanelIsOpen']),
+  methods: {
+    ...mapMutations(['toggleDrawer']),
+  },
 }
 </script>
 
