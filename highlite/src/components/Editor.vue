@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="rows-container">
     <div class="toolbar-container" ref="toolbar">
-      <button class="toolbar-btn">
+      <button class="toolbar-btn" @click="this.toggleHeadingPanel">
         <img src="../../public/004-header.svg" />
       </button>
       <button class="toolbar-btn ql-bold">
@@ -34,6 +34,7 @@
     </div>
     <ToolBarColors />
     <ToolBarLink />
+    <ToolBarHeading />
     <v-divider></v-divider>
     <div ref="editor">sa;slm;f mslfndlfnl ldnfldnk</div>
   </div>
@@ -45,6 +46,7 @@ import { newEvent, setInitialData, formatColor, formatLink } from '../helpers/ty
 import { mapState, mapMutations } from 'vuex'
 import ToolBarColors from './TheToolBarColors'
 import ToolBarLink from './TheToolBarLink'
+import ToolBarHeading from './TheToolBarHeading'
 import { eventBus } from './bus'
 var BackgroundClass = Quill.import('attributors/class/background')
 var ColorClass = Quill.import('attributors/class/color')
@@ -56,6 +58,7 @@ export default {
   components: {
     ToolBarColors,
     ToolBarLink,
+    ToolBarHeading
   },
   data: () => ({
     editor: null,
@@ -102,6 +105,7 @@ export default {
     ...mapMutations([
       'toggleColorPanel',
       'toggleLinkPanel',
+      'toggleHeadingPanel',
       'updateCursorPosition',
       'setEditorFormats',
       'setEditorDatas',
@@ -145,10 +149,13 @@ export default {
 </script>
 
 <style  scoped>
+.rows-container{
+  padding: 0 10px;
+}
 .toolbar-container {
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: space-between;
   margin: 10px 0;
 }
 .toolbar-btn {

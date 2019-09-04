@@ -1,6 +1,5 @@
 <template>
-  <div>
-    <template v-if="linkPanelIsOpen">
+  <div v-if="this.linkPanelIsOpen">
       <div class="link-container">
         <input v-model="currentLink" class="text-field" type="text" placeholder="Enter Your Link" />
         <button class="toolbar-btn" @click="() => this.emitLink({link: this.currentLink})">
@@ -10,7 +9,6 @@
           <img src="../../public/close.svg" />
         </button>
       </div>
-    </template>
   </div>
 </template>
 
@@ -37,7 +35,7 @@ export default {
 .link-container {
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: space-between;
   margin: 10px 0;
 }
 .text-field {
@@ -45,7 +43,6 @@ export default {
   border-radius: 20px;
   background: #ffffff 0% 0% no-repeat padding-box;
   border: 3px solid #d9d9d9;
-  border-radius: 20px;
   opacity: 1;
   padding: 0 5%;
 }
