@@ -1,47 +1,64 @@
 <template>
-  <div class="rows-container">
-    <div class="toolbar-container" ref="toolbar">
-      <button class="toolbar-btn" @click="this.toggleHeadingPanel">
-        <img src="../../public/004-header.svg" />
-      </button>
-      <button class="toolbar-btn ql-bold">
-        <img src="../../public/002-bold-text-option.svg" />
-      </button>
-      <button class="toolbar-btn ql-italic">
-        <img src="../../public/001-italicize-text.svg" />
-      </button>
+  <div>
+    <editor-menu-bar :editor="editor" v-slot="{ commands, isActive }">
+      <div class="rows-container">
+        <div class="toolbar-container" ref="toolbar">
+          <button class="toolbar-btn" @click="toggleHeadingPanel">
+            <img src="../../public/004-header.svg" />
+          </button>
+          <button
+            class="toolbar-btn"
+            :class="{ 'active': isActive.bold() }"
+            @click="() => handle(isActive)"
+          >
+            <img src="../../public/002-bold-text-option.svg" />
+          </button>
+          <button
+            class="toolbar-btn"
+            :class="{ 'active': isActive.italic() }"
+            @click="commands.italic"
+          >
+            <img src="../../public/001-italicize-text.svg" />
+          </button>
 
-      <button class="toolbar-btn ql-underline">
-        <img src="../../public/003-underline-text-option.svg" />
-      </button>
+          <button
+            class="toolbar-btn"
+            :class="{ 'active': isActive.underline() }"
+            @click="commands.underline"
+          >
+            <img src="../../public/003-underline-text-option.svg" />
+          </button>
 
-      <button class="toolbar-btn" @click="this.toggleColorPanel">
-        <div
-          v-if="this.formatColor"
-          class="inner-color"
-          :style="{ 'background-color': this.formatColor }"
-        ></div>
-        <div class="inner-color" v-else></div>
-      </button>
+          <button class="toolbar-btn" @click="toggleColorPanel">
+            <div v-if="formatColor" class="inner-color" :style="{ 'background-color': 'black' }"></div>
+            <div class="inner-color" v-else></div>
+          </button>
+          <button
+            class="toolbar-btn"
+            value="bullet"
+            :class="{ 'active': isActive.bullet_list() }"
+            @click="commands.bullet_list"
+          >
+            <img src="../../public/006-list-1.svg" />
+          </button>
 
-      <button class="toolbar-btn ql-list" value="bullet">
-        <img src="../../public/006-list-1.svg" />
-      </button>
-
-      <button class="toolbar-btn ql-link">
-        <img src="../../public/007-link.svg" />
-      </button>
-    </div>
-    <ToolBarColors />
+          <button class="toolbar-btn ql-link" @click="toggleLinkPanel">
+            <img src="../../public/007-link.svg" />
+          </button>
+        </div>
+        <ToolBarColors />
+        <ToolBarHeading />
+      </div>
+    </editor-menu-bar>
     <ToolBarLink />
-    <ToolBarHeading />
     <v-divider></v-divider>
-    <div ref="editor">sa;slm;f mslfndlfnl ldnfldnk</div>
+
+    <editor-content :editor="editor" />
   </div>
 </template>
 
 <script>
-import Quill from 'quill'
+import { Editor, EditorContent, EditorMenuBar } from 'tiptap'
 import {
   newEvent,
   setInitialData,
@@ -53,58 +70,60 @@ import ToolBarColors from './TheToolBarColors'
 import ToolBarLink from './TheToolBarLink'
 import ToolBarHeading from './TheToolBarHeading'
 import { eventBus } from './bus'
-var BackgroundClass = Quill.import('attributors/class/background')
-var ColorClass = Quill.import('attributors/class/color')
-var SizeStyle = Quill.import('attributors/style/size')
-Quill.register(BackgroundClass, true)
-Quill.register(ColorClass, true)
-Quill.register(SizeStyle, true)
+import {
+  Blockquote,
+  CodeBlock,
+  HardBreak,
+  Heading,
+  HorizontalRule,
+  OrderedList,
+  BulletList,
+  ListItem,
+  TodoItem,
+  TodoList,
+  Bold,
+  Code,
+  Italic,
+  Link,
+  Strike,
+  Underline,
+  History,
+} from 'tiptap-extensions'
 export default {
   components: {
     ToolBarColors,
     ToolBarLink,
     ToolBarHeading,
+    EditorContent,
+    EditorMenuBar,
   },
   data: () => ({
-    editor: null,
+    editor: new Editor({
+      extensions: [
+        new Blockquote(),
+        new BulletList(),
+        new CodeBlock(),
+        new HardBreak(),
+        new Heading({ levels: [1, 2, 3] }),
+        new HorizontalRule(),
+        new ListItem(),
+        new OrderedList(),
+        new TodoItem(),
+        new TodoList(),
+        new Link(),
+        new Bold(),
+        new Code(),
+        new Italic(),
+        new Strike(),
+        new Underline(),
+        new History(),
+      ],
+      content: ``,
+      autoFocus: true,
+    }),
   }),
-  mounted() {
-    this.editor = new Quill(this.$refs.editor, {
-      modules: {
-        toolbar: this.$refs.toolbar,
-      },
-      scrollingContainer: this.$refs.scrollingContainer,
-    })
-
-    var toolbar = this.editor.getModule('toolbar')
-    toolbar.addHandler('link', this.handleLinkPanel)
-
-    this.editor.on('text-change', () =>
-      this.setEditorDatas({
-        text: this.editor.getText(),
-        content: this.editor.getContents().ops,
-      }),
-    )
-
-    // if (this.editor.getText().length === 1) this.editor.focus()
-
-    this.editor.on('selection-change', pos => this.handlePositionChange(pos))
-
-    eventBus.$on(setInitialData, payload => {
-      this.insertText(payload)
-    })
-
-    eventBus.$on(newEvent, payload => {
-      this.handleEvent(payload)
-    })
-
-    eventBus.$on(formatColor, payload => {
-      this.editor.format('color', payload.color)
-    })
-
-    eventBus.$on(formatLink, payload => {
-      this.editor.format('link', payload.link)
-    })
+  beforeDestroy() {
+    this.editor.destroy()
   },
 
   methods: {
@@ -118,38 +137,24 @@ export default {
     ]),
     handleLinkPanel(value) {
       if (value) {
-        //override below functionality
-        // var href = prompt('Enter the URL')
-        // this.quill.format('link', href)
-        this.toggleLinkPanel()
       } else {
-        this.editor.format('link', false)
       }
+    },
+    handle(data) {
+      console.log(data)
     },
     handlePositionChange(pos) {
       if (pos) {
-        this.setEditorFormats(this.editor.getFormat(pos.index, pos.length))
-        this.updateCursorPosition(pos)
       }
     },
     insertText(payload) {
       if (!payload.text) return
-      this.editor.setText(payload.text)
-      this.editor.setContents(JSON.parse(payload.content))
     },
-    handleEvent(event) {
-      const { index, length } = this.editorRange
-      this.editor.formatText(index, length, event, !this.editorFormats[event])
-      this.setEditorFormats(this.editor.getFormat(index, length))
-    },
+    handleEvent(event) {},
   },
   computed: {
     ...mapState(['text', 'content', 'editorRange', 'editorFormats']),
-    formatColor() {
-      if (!this.editor) return
-      var color = this.editor.getFormat().color
-      return color ? color : null
-    },
+    formatColor() {},
   },
 }
 </script>
@@ -186,7 +191,7 @@ export default {
   background-color: black;
 }
 
-.ql-active {
+.active {
   background-color: #ffb100;
 }
 
