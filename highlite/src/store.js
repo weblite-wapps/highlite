@@ -8,7 +8,8 @@ export default new Vuex.Store({
     wisId: 'wis1',
     userId: 'user1',
     colorPanelIsOpen: false,
-    hedingPanelIsOpen: false,
+    linkPanelIsOpen: false,
+    headingPanelIsOpen: false,
     drawerIsOpen: false,
     text: '',
     content: null,
@@ -29,10 +30,19 @@ export default new Vuex.Store({
   },
   mutations: {
     toggleColorPanel(state) {
+      state.linkPanelIsOpen = false
+      state.headingPanelIsOpen = false
       state.colorPanelIsOpen = !state.colorPanelIsOpen
     },
+    toggleLinkPanel(state) {
+      state.colorPanelIsOpen = false
+      state.headingPanelIsOpen = false
+      state.linkPanelIsOpen = !state.linkPanelIsOpen
+    },
     toggleHeadingPanel(state) {
-      state.hedingPanelIsOpen = !state.hedingPanelIsOpen
+      state.colorPanelIsOpen = false
+      state.linkPanelIsOpen = false
+      state.headingPanelIsOpen = !state.headingPanelIsOpen
     },
     toggleDrawer(state) {
       console.log('drawer changed')

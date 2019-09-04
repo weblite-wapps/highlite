@@ -3,7 +3,6 @@
     <div class="content">
       <CustomizeToolbar />
       <AppBar :save="save" />
-      <ToolBar />
       <Editor />
       <Drawer />
       <v-btn @click="save">save</v-btn>
@@ -15,7 +14,6 @@
 <script>
 // <Drawer />
 import AppBar from './components/TheAppBar'
-import ToolBar from './components/TheToolBar'
 import Drawer from './components/TheDrawer'
 import Editor from './components/Editor'
 import CustomizeToolbar from './components/TheCustomizeToolbar'
@@ -29,7 +27,6 @@ export default {
   store,
   components: {
     AppBar,
-    ToolBar,
     Drawer,
     Editor,
     CustomizeToolbar,
