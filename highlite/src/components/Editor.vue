@@ -54,7 +54,7 @@
         <ToolBarHeading :commands="commands" />
       </div>
     </editor-menu-bar>
-    <ToolBarLink />
+    <ToolBarLink :commands="this.editor.commands"/>
     <v-divider></v-divider>
 
     <editor-content :editor="editor" />
