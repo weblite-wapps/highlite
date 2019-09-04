@@ -73,6 +73,7 @@ export default {
       modules: {
         toolbar: this.$refs.toolbar,
       },
+      scrollingContainer: this.$refs.scrollingContainer,
     })
 
     var toolbar = this.editor.getModule('toolbar')
