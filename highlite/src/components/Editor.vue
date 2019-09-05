@@ -9,7 +9,6 @@
           <button
             class="toolbar-btn"
             :class="{ 'active': isActive.bold() }"
-            @click="() => handle(getMarkAttrs())"
           >
             <img src="../../public/002-bold-text-option.svg" />
           </button>
@@ -29,9 +28,12 @@
             <img src="../../public/003-underline-text-option.svg" />
           </button>
 
-          <button class="toolbar-btn" @click="toggleColorPanel" :class="{ 'active': isActive.textcolor() }">
-            <div v-if="formatColor" class="inner-color" :style="{ 'background-color': 'black' }"></div>
-            <div class="inner-color" v-else></div>
+          <button
+            class="toolbar-btn"
+            @click="toggleColorPanel"
+            :class="{ 'active': isActive.textcolor() }"
+          >
+            <div class="inner-color"></div>
           </button>
           <button
             class="toolbar-btn"
@@ -50,11 +52,11 @@
             <img src="../../public/007-link.svg" />
           </button>
         </div>
-        <ToolBarColors :commands="commands"/>
+        <ToolBarColors :commands="commands" />
         <ToolBarHeading :commands="commands" />
       </div>
     </editor-menu-bar>
-    <ToolBarLink :commands="this.editor.commands"/>
+    <ToolBarLink :commands="this.editor.commands" />
     <v-divider></v-divider>
 
     <editor-content style="outline:non" :editor="editor" />
@@ -126,8 +128,16 @@ export default {
       ],
       content: ``,
       autoFocus: true,
+      onUpdate: () => {},
     }),
   }),
+
+  mounted() {
+    this.editor.setContent(this.content)
+    this.editor.on('update', ({ getHTML, getJSON }) => {
+      this.setEditorDatas(this.editor.getJSON())
+    })
+  },
   beforeDestroy() {
     this.editor.destroy()
   },
@@ -137,32 +147,8 @@ export default {
       'toggleColorPanel',
       'toggleLinkPanel',
       'toggleHeadingPanel',
-      'updateCursorPosition',
-      'setEditorFormats',
       'setEditorDatas',
     ]),
-    handleLinkPanel(value) {
-      if (value) {
-      } else {
-      }
-    },
-    handle(data) {
-      console.log(data)
-      console.log(this.editor.commands)
-      console.log(this.editor.getMarkAttrs())
-    },
-    handlePositionChange(pos) {
-      if (pos) {
-      }
-    },
-    insertText(payload) {
-      if (!payload.text) return
-    },
-    handleEvent(event) {},
-  },
-  computed: {
-    ...mapState(['text', 'content', 'editorRange', 'editorFormats']),
-    formatColor() {},
   },
 }
 </script>
@@ -203,7 +189,8 @@ export default {
   background-color: #ffb100;
 }
 
-button,div:focus {
+button,
+div:focus {
   outline: 0;
 }
 /* to fix svg icons positions */

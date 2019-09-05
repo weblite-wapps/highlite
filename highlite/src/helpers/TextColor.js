@@ -1,6 +1,6 @@
 /* eslint-disable class-methods-use-this */
 import { Mark } from 'tiptap'
-import { toggleMark, updateMark } from 'tiptap-commands'
+import { toggleMark, markInputRule, markPasteRule, updateMark } from 'tiptap-commands'
 
 export default class TextColor extends Mark {
 
@@ -37,9 +37,22 @@ export default class TextColor extends Mark {
     commands({ type }) {
         return (attrs) => updateMark(type, attrs)
     }
-}
 
-function updateAndMark(type, attrs){
-    toggleMark(type, attrs)
-    updateMark(type, attrs)
+    keys({ type }) {
+        return {
+            'Mod-b': updateMark(type),
+        }
+    }
+
+    inputRules({ type }) {
+        return [
+            markInputRule(/(?:\*\*|__)([^*_]+)(?:\*\*|__)$/, type),
+        ]
+    }
+
+    pasteRules({ type }) {
+        return [
+            markPasteRule(/(?:\*\*|__)([^*_]+)(?:\*\*|__)/g, type),
+        ]
+    }
 }
