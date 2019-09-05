@@ -1,6 +1,6 @@
 <template>
   <div>
-    <editor-menu-bar :editor="editor" v-slot="{ commands, isActive }">
+    <editor-menu-bar :editor="editor" v-slot="{ commands, isActive, getMarkAttrs }">
       <div>
         <div class="toolbar-container" ref="toolbar">
           <button class="toolbar-btn" @click="toggleHeadingPanel">
@@ -9,7 +9,7 @@
           <button
             class="toolbar-btn"
             :class="{ 'active': isActive.bold() }"
-            @click="() => handle(isActive)"
+            @click="() => handle(getMarkAttrs())"
           >
             <img src="../../public/002-bold-text-option.svg" />
           </button>
@@ -29,7 +29,7 @@
             <img src="../../public/003-underline-text-option.svg" />
           </button>
 
-          <button class="toolbar-btn" @click="toggleColorPanel">
+          <button class="toolbar-btn" @click="toggleColorPanel" :class="{ 'active': isActive.textcolor() }">
             <div v-if="formatColor" class="inner-color" :style="{ 'background-color': 'black' }"></div>
             <div class="inner-color" v-else></div>
           </button>
@@ -50,14 +50,14 @@
             <img src="../../public/007-link.svg" />
           </button>
         </div>
-        <ToolBarColors />
+        <ToolBarColors :commands="commands"/>
         <ToolBarHeading :commands="commands" />
       </div>
     </editor-menu-bar>
     <ToolBarLink :commands="this.editor.commands"/>
     <v-divider></v-divider>
 
-    <editor-content :editor="editor" />
+    <editor-content style="outline:non" :editor="editor" />
   </div>
 </template>
 
@@ -93,6 +93,7 @@ import {
   Underline,
   History,
 } from 'tiptap-extensions'
+import TextColor from '../helpers/TextColor'
 export default {
   components: {
     ToolBarColors,
@@ -104,6 +105,7 @@ export default {
   data: () => ({
     editor: new Editor({
       extensions: [
+        new TextColor(),
         new Blockquote(),
         new BulletList(),
         new CodeBlock(),
@@ -146,6 +148,8 @@ export default {
     },
     handle(data) {
       console.log(data)
+      console.log(this.editor.commands)
+      console.log(this.editor.getMarkAttrs())
     },
     handlePositionChange(pos) {
       if (pos) {
@@ -199,10 +203,9 @@ export default {
   background-color: #ffb100;
 }
 
-button:focus {
+button,div:focus {
   outline: 0;
 }
-
 /* to fix svg icons positions */
 .toolbar-btn img {
   margin-top: 6px;

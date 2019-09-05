@@ -1,7 +1,7 @@
 <template>
   <div v-if="this.colorPanelIsOpen" class="color-container">
     <template v-for="color in colors">
-      <button class="toolbar-btn" :key="color" @click="emitColor({color})">
+      <button class="toolbar-btn" :key="color" @click="commands.textcolor({color})">
         <div class="inner-color" :style="{ 'background-color': color }"></div>
       </button>
     </template>
@@ -29,7 +29,7 @@ export default {
     colors: ['#26B9E5', '#F24343', '#0DAF14', '#EFE60B', '#000000'],
   }),
   props: {
-    // isOpen: Boolean,
+    commands: Object,
   },
   methods: {
     ...mapMutations(['toggleColorPanel']),
