@@ -11,10 +11,7 @@ export default new Vuex.Store({
     linkPanelIsOpen: false,
     headingPanelIsOpen: false,
     drawerIsOpen: false,
-    text: '',
     content: null,
-    editorRange: {},
-    editorFormats: {},
     customizeArray: [
       { title: 'Header', able: true },
       { title: 'Bold', able: true },
@@ -47,15 +44,8 @@ export default new Vuex.Store({
     toggleDrawer(state) {
       state.drawerIsOpen = !state.drawerIsOpen
     },
-    updateCursorPosition(state, { index, length }) {
-      state.editorRange = { index, length }
-    },
-    setEditorFormats(state, formats) {
-      state.editorFormats = formats
-    },
-    setEditorDatas(state, data) {
-      state.text = data.text
-      state.content = data.content
+    setEditorDatas(state, content) {
+      state.content = content
     },
     setCustomizeArray(state, arr) {
       state.customizeArray = arr

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <editor-menu-bar :editor="editor" v-slot="{ commands, isActive }">
+    <editor-menu-bar :editor="editor" v-slot="{ commands, isActive, getMarkAttrs }">
       <div>
         <div class="toolbar-container" ref="toolbar">
           <button
@@ -37,9 +37,13 @@
             <img src="../../public/003-underline-text-option.svg" />
           </button>
 
-          <button v-if="customizeArray[4].able" class="toolbar-btn" @click="toggleColorPanel">
-            <div v-if="formatColor" class="inner-color" :style="{ 'background-color': 'black' }"></div>
-            <div class="inner-color" v-else></div>
+          <button
+            v-if="customizeArray[4].able"
+            :class="{ 'active': isActive.textcolor() }"
+            class="toolbar-btn"
+            @click="toggleColorPanel"
+          >
+            <div class="inner-color"></div>
           </button>
           <button
             v-if="customizeArray[5].able"
@@ -103,14 +107,14 @@
             </button>
           </span>
         </div>
-        <ToolBarColors />
+        <ToolBarColors :commands="commands" />
         <ToolBarHeading :commands="commands" />
       </div>
     </editor-menu-bar>
     <ToolBarLink :commands="this.editor.commands" />
     <v-divider></v-divider>
 
-    <editor-content :editor="editor" />
+    <editor-content class="editor-container" :editor="editor" />
   </div>
 </template>
 
@@ -151,6 +155,7 @@ import {
   TableCell,
   TableRow,
 } from 'tiptap-extensions'
+import TextColor from '../helpers/TextColor'
 export default {
   components: {
     ToolBarColors,
@@ -163,6 +168,7 @@ export default {
   data: () => ({
     editor: new Editor({
       extensions: [
+        new TextColor(),
         new Blockquote(),
         new BulletList(),
         new CodeBlock(),
@@ -189,10 +195,20 @@ export default {
       ],
       content: ``,
       autoFocus: true,
+      onUpdate: () => {},
     }),
   }),
+
+  mounted() {
+    this.editor.on('update', ({ getHTML, getJSON }) => {
+      this.setEditorDatas(getJSON())
+    })
+  },
   beforeDestroy() {
     this.editor.destroy()
+  },
+  computed: {
+    ...mapState(['customizeArray']),
   },
 
   methods: {
@@ -200,36 +216,8 @@ export default {
       'toggleColorPanel',
       'toggleLinkPanel',
       'toggleHeadingPanel',
-      'updateCursorPosition',
-      'setEditorFormats',
       'setEditorDatas',
     ]),
-    handleLinkPanel(value) {
-      if (value) {
-      } else {
-      }
-    },
-    handle(data) {
-      console.log(data)
-    },
-    handlePositionChange(pos) {
-      if (pos) {
-      }
-    },
-    insertText(payload) {
-      if (!payload.text) return
-    },
-    handleEvent(event) {},
-  },
-  computed: {
-    ...mapState([
-      'text',
-      'content',
-      'editorRange',
-      'editorFormats',
-      'customizeArray',
-    ]),
-    formatColor() {},
   },
 }
 </script>
@@ -277,10 +265,10 @@ export default {
   background-color: #ffb100;
 }
 
-button:focus {
+button,
+div:focus {
   outline: 0;
 }
-
 /* to fix svg icons positions */
 .toolbar-btn img {
   margin-top: 6px;
@@ -315,5 +303,9 @@ button:focus {
   .toolbar-container {
     justify-content: space-around;
   }
+}
+
+.editor-container {
+  margin-top: 5px;
 }
 </style>
