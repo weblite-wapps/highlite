@@ -5,7 +5,9 @@
         <div class="inner-color" :style="{ 'background-color': color }"></div>
       </button>
     </template>
-    <button class="toolbar-btn" :style="{ 'color': 'white', 'font-size': '24px' }">m</button>
+    <button class="toolbar-btn">
+      <input type="color" class="c--color-input" />
+    </button>
     <button class="toolbar-btn" @click="this.toggleColorPanel">
       <img src="../../public/close.svg" />
     </button>
@@ -56,10 +58,14 @@ button:focus {
   background: #bebebe 0% 0% no-repeat padding-box;
   opacity: 1;
   display: inline-block;
+  margin-right: 9px;
+  margin-bottom: 10px;
+  min-width: 30px;
 }
 .inner-color {
   position: relative;
-  left: 11px;
+  margin-left: auto;
+  margin-right: auto;
   height: 19px;
   width: 19px;
   border-radius: 50%;
@@ -68,7 +74,43 @@ button:focus {
 .color-container {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  margin: 10px 0;
+  justify-content: space-around;
+  max-width: 500px;
+  margin: auto;
+}
+
+.c--color-input {
+  width: 20px;
+}
+
+@media only screen and (max-width: 250px) {
+  .color-container {
+    overflow-y: hidden;
+    overflow-x: scroll;
+  }
+  .toolbar-btn {
+    width: auto;
+    height: auto;
+    margin-right: auto;
+  }
+}
+
+@media only screen and (min-width: 250px) and (max-width: 329px) {
+  .color-container {
+    justify-content: space-around;
+    /* overflow-x: hidden; */
+  }
+
+  .toolbar-btn {
+    width: auto;
+    height: auto;
+    margin-right: auto;
+    margin-left: auto;
+  }
+}
+@media only screen and (min-width: 330px) {
+  .color-container {
+    justify-content: space-around;
+  }
 }
 </style>

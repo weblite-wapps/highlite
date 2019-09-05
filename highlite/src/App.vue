@@ -59,8 +59,6 @@ export default {
 
 <style  scoped>
 .app {
-  top: 0px;
-  left: 0px;
   width: 100%;
   height: 100vh;
   background: #ffffff 0% 0% no-repeat padding-box;
@@ -69,7 +67,7 @@ export default {
 }
 
 .content {
-  margin-left: 18px;
+  margin: 0px 10px 0px 10px;
   height: 100%;
   display: flex;
   flex-direction: column;

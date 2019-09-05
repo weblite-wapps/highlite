@@ -39,6 +39,8 @@ export default {
   flex-direction: row;
   justify-content: space-between;
   margin: 10px 0;
+  max-width: 400px;
+  margin: auto;
 }
 .text-field {
   min-width: 210px;

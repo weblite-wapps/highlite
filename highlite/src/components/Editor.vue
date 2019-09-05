@@ -3,17 +3,24 @@
     <editor-menu-bar :editor="editor" v-slot="{ commands, isActive }">
       <div>
         <div class="toolbar-container" ref="toolbar">
-          <button class="toolbar-btn" @click="toggleHeadingPanel">
+          <button
+            v-if="customizeArray[0].able"
+            class="toolbar-btn"
+            :class="{ 'active': isActive.heading() }"
+            @click="commands.heading({ level: 2 })"
+          >
             <img src="../../public/004-header.svg" />
           </button>
           <button
+            v-if="customizeArray[1].able"
             class="toolbar-btn"
             :class="{ 'active': isActive.bold() }"
-            @click="() => handle(isActive)"
+            @click="commands.bold"
           >
             <img src="../../public/002-bold-text-option.svg" />
           </button>
           <button
+            v-if="customizeArray[2].able"
             class="toolbar-btn"
             :class="{ 'active': isActive.italic() }"
             @click="commands.italic"
@@ -22,6 +29,7 @@
           </button>
 
           <button
+            v-if="customizeArray[3].able"
             class="toolbar-btn"
             :class="{ 'active': isActive.underline() }"
             @click="commands.underline"
@@ -29,11 +37,12 @@
             <img src="../../public/003-underline-text-option.svg" />
           </button>
 
-          <button class="toolbar-btn" @click="toggleColorPanel">
+          <button v-if="customizeArray[4].able" class="toolbar-btn" @click="toggleColorPanel">
             <div v-if="formatColor" class="inner-color" :style="{ 'background-color': 'black' }"></div>
             <div class="inner-color" v-else></div>
           </button>
           <button
+            v-if="customizeArray[5].able"
             class="toolbar-btn"
             value="bullet"
             :class="{ 'active': isActive.bullet_list() }"
@@ -43,18 +52,62 @@
           </button>
 
           <button
+            v-if="customizeArray[6].able"
             class="toolbar-btn ql-link"
             @click="toggleLinkPanel"
             :class="{ 'active': isActive.link() }"
           >
             <img src="../../public/007-link.svg" />
           </button>
+
+          <!-- start todolist -->
+          <!-- <button
+            v-if="customizeArray[6].able"
+            class="toolbar-btn ql-link"
+            @click="commands.todo_list"
+            :class="{ 'active': isActive.todo_list() }"
+          >
+            <img src="../../public/007-link.svg" />
+          </button>-->
+          <!-- end of todolist -->
+
+          <!-- <button
+            class="toolbar-btn ql-link"
+            @click="commands.createTable({rowsCount: 3, colsCount: 3, withHeaderRow: false })"
+          >
+            <img src="../../public/007-link.svg" />
+          </button>-->
+
+          <span v-if="isActive.table()">
+            <button class="menubar__button" @click="commands.deleteTable">delete_table</button>
+            <hr />
+            <button class="menubar__button" @click="commands.addColumnBefore">add_col_before</button>
+            <hr />
+            <button class="menubar__button" @click="commands.addColumnAfter">
+              <icon name="add_col_after" />
+            </button>
+            <button class="menubar__button" @click="commands.deleteColumn">
+              <icon name="delete_col" />
+            </button>
+            <button class="menubar__button" @click="commands.addRowBefore">
+              <icon name="add_row_before" />
+            </button>
+            <button class="menubar__button" @click="commands.addRowAfter">
+              <icon name="add_row_after" />
+            </button>
+            <button class="menubar__button" @click="commands.deleteRow">
+              <icon name="delete_row" />
+            </button>
+            <button class="menubar__button" @click="commands.toggleCellMerge">
+              <icon name="combine_cells" />
+            </button>
+          </span>
         </div>
         <ToolBarColors />
         <ToolBarHeading :commands="commands" />
       </div>
     </editor-menu-bar>
-    <ToolBarLink :commands="this.editor.commands"/>
+    <ToolBarLink :commands="this.editor.commands" />
     <v-divider></v-divider>
 
     <editor-content :editor="editor" />
@@ -62,6 +115,7 @@
 </template>
 
 <script>
+import Icon from './icon'
 import { Editor, EditorContent, EditorMenuBar } from 'tiptap'
 import {
   newEvent,
@@ -92,6 +146,10 @@ import {
   Strike,
   Underline,
   History,
+  Table,
+  TableHeader,
+  TableCell,
+  TableRow,
 } from 'tiptap-extensions'
 export default {
   components: {
@@ -100,6 +158,7 @@ export default {
     ToolBarHeading,
     EditorContent,
     EditorMenuBar,
+    Icon,
   },
   data: () => ({
     editor: new Editor({
@@ -121,6 +180,12 @@ export default {
         new Strike(),
         new Underline(),
         new History(),
+        new Table({
+          resizable: true,
+        }),
+        new TableHeader(),
+        new TableCell(),
+        new TableRow(),
       ],
       content: ``,
       autoFocus: true,
@@ -157,7 +222,13 @@ export default {
     handleEvent(event) {},
   },
   computed: {
-    ...mapState(['text', 'content', 'editorRange', 'editorFormats']),
+    ...mapState([
+      'text',
+      'content',
+      'editorRange',
+      'editorFormats',
+      'customizeArray',
+    ]),
     formatColor() {},
   },
 }
@@ -175,8 +246,11 @@ export default {
 .toolbar-container {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  margin: 10px 0;
+  margin: 0px auto 0px auto;
+  max-width: 500px;
+  justify-content: left;
+  overflow-y: hidden;
+  overflow-x: hidden;
 }
 .toolbar-btn {
   height: 40px;
@@ -185,10 +259,14 @@ export default {
   background: #bebebe 0% 0% no-repeat padding-box;
   opacity: 1;
   display: inline-block;
+  min-width: 35px;
+  margin-right: 9px;
+  margin-bottom: 10px;
 }
 .inner-color {
   position: relative;
-  left: 11px;
+  margin-left: auto;
+  margin-right: auto;
   height: 19px;
   width: 19px;
   border-radius: 50%;
@@ -206,5 +284,36 @@ button:focus {
 /* to fix svg icons positions */
 .toolbar-btn img {
   margin-top: 6px;
+}
+@media only screen and (max-width: 300px) {
+  .toolbar-container {
+    overflow-y: hidden;
+    overflow-x: scroll;
+  }
+  .toolbar-btn {
+    width: auto;
+    height: auto;
+    margin-right: auto;
+  }
+}
+
+@media only screen and (min-width: 300px) and (max-width: 329px) {
+  .toolbar-container {
+    justify-content: space-around;
+    overflow-x: hidden;
+  }
+  .toolbar-btn {
+    width: auto;
+    height: auto;
+    margin-right: auto;
+    margin-left: auto;
+  }
+  .toolbar-btn img {
+  }
+}
+@media only screen and (min-width: 330px) {
+  .toolbar-container {
+    justify-content: space-around;
+  }
 }
 </style>

@@ -4,7 +4,9 @@
       <img class="c--appBar-icon" src="a.svg" alt />
     </div>
     <div class="c--appBar-header-panel">
-      <div class="c--appBar-header">HIGHLITE</div>
+      <div class="c--appBar-header">
+        <input type="text" v-model="title" placeholder="untitled" class="c--appBar-header-input" />
+      </div>
       <v-menu transition="slide-y-transition" bottom>
         <template v-slot:activator="{ on }">
           <div class="c--appBar-header-moreTools" v-on="on">
@@ -12,15 +14,15 @@
           </div>
         </template>
         <v-list>
-          <v-list-item @click="()=> {}">
+          <!-- <v-list-item @click="()=> {}">
             <v-list-item-title>Send</v-list-item-title>
-          </v-list-item>
+          </v-list-item>-->
           <v-list-item @click="()=> this.setCustomizeIsOpen(true)">
             <v-list-item-title>Customize Toolbar</v-list-item-title>
           </v-list-item>
-          <v-list-item @click="()=> {}">
+          <!-- <v-list-item @click="()=> {}">
             <v-list-item-title>Font Sizes</v-list-item-title>
-          </v-list-item>
+          </v-list-item>-->
           <v-list-item @click="save">
             <v-list-item-title>Save</v-list-item-title>
           </v-list-item>
@@ -33,7 +35,9 @@
 <script>
 import { mapMutations } from 'vuex'
 export default {
-  data: () => ({}),
+  data: () => ({
+    title: '',
+  }),
   props: {
     save: Function,
   },
@@ -47,7 +51,7 @@ export default {
 .c--appBar {
   display: flex;
   margin: 16px 17px 15px 0px;
-  height: 50px;
+  height: 40px;
   width: 100%;
 }
 
@@ -88,5 +92,14 @@ export default {
   cursor: pointer;
   margin-right: 14.27px;
   margin-left: auto;
+}
+
+.c--appBar-header-input {
+  /* color: white; */
+  outline: none;
+}
+::placeholder {
+  color: #ffffff;
+  font: Bold 20px/26px Roboto;
 }
 </style>
