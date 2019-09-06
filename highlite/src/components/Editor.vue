@@ -114,7 +114,7 @@
     <ToolBarLink :commands="this.editor.commands" />
     <v-divider></v-divider>
 
-    <editor-content class="editor-container" :editor="editor" />
+    <editor-content dir="auto" class="editor-container" :editor="editor" />
   </div>
 </template>
 
