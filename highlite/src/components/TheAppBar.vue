@@ -34,15 +34,26 @@
 
 <script>
 import { mapMutations } from 'vuex'
+import { eventBus } from './bus'
+import { setInitialData } from '../helpers/typesUtils'
+import debounce from 'debounce'
 export default {
   data: () => ({
     title: '',
   }),
+  mounted() {
+    eventBus.$on(setInitialData, data => (this.title = data.title))
+  },
   props: {
     save: Function,
   },
   methods: {
-    ...mapMutations(['setCustomizeIsOpen']),
+    ...mapMutations(['setCustomizeIsOpen', 'setNoteTitle']),
+  },
+  watch: {
+    title: debounce(function() {
+      this.setNoteTitle(this.title)
+    }, 300),
   },
 }
 </script>

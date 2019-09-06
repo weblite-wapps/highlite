@@ -24,6 +24,7 @@ export default new Vuex.Store({
       { title: 'Image', able: false },
     ],
     customizeIsOpen: false,
+    title: '',
   },
   mutations: {
     toggleColorPanel(state) {
@@ -52,6 +53,9 @@ export default new Vuex.Store({
     },
     setCustomizeIsOpen(state, value) {
       state.customizeIsOpen = value
+    },
+    setNoteTitle(state, title) {
+      state.title = title
     },
   },
 

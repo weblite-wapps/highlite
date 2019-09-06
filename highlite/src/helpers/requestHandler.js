@@ -3,12 +3,11 @@ import config from '../config'
 
 const logger = console.log
 
-export const save = (wisId, userId, text, content) =>
+export const save = (wisId, userId, title, content) =>
   request
     .post(`${config.server}/saveNote`)
     .set('Access-Control-Allow-Origin', '*')
-    // .set('Content-Type', 'application/json')
-    .send({ wisId, userId, text, content })
+    .send({ wisId, userId, title, content })
     .then(logger)
     .catch(logger)
 

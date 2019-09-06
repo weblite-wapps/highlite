@@ -119,19 +119,14 @@
 </template>
 
 <script>
-import Icon from './icon'
 import { Editor, EditorContent, EditorMenuBar } from 'tiptap'
-import {
-  newEvent,
-  setInitialData,
-  formatColor,
-  formatLink,
-} from '../helpers/typesUtils'
-import { mapState, mapMutations } from 'vuex'
-import ToolBarColors from './TheToolBarColors'
-import ToolBarLink from './TheToolBarLink'
+import { setInitialData } from '../helpers/typesUtils'
 import ToolBarHeading from './TheToolBarHeading'
+import ToolBarColors from './TheToolBarColors'
+import { mapState, mapMutations } from 'vuex'
+import ToolBarLink from './TheToolBarLink'
 import { eventBus } from './bus'
+import Icon from './icon'
 import {
   Blockquote,
   CodeBlock,
@@ -195,13 +190,16 @@ export default {
       ],
       content: ``,
       autoFocus: true,
-      onUpdate: () => {},
     }),
   }),
 
   mounted() {
     this.editor.on('update', ({ getHTML, getJSON }) => {
       this.setEditorDatas(getJSON())
+    })
+
+    eventBus.$on(setInitialData, data => {
+      this.editor.setContent(JSON.parse(data.content))
     })
   },
   beforeDestroy() {
@@ -210,7 +208,6 @@ export default {
   computed: {
     ...mapState(['customizeArray']),
   },
-
   methods: {
     ...mapMutations([
       'toggleColorPanel',

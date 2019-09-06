@@ -34,16 +34,16 @@ export default {
     CustomizeToolbar,
   },
   data: () => ({}),
-  computed: mapState(['wisId', 'userId', 'text', 'content', 'drawerIsOpen']),
+  computed: mapState(['wisId', 'userId', 'title', 'content']),
   created() {
-    // this.fetch()
+    this.fetch()
   },
   methods: {
     save() {
       save(
         this.wisId,
         this.userId,
-        this.text,
+        this.title,
         JSON.stringify(this.content),
       ).then(res => console.log(res))
     },
