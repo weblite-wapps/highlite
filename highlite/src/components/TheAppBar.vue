@@ -1,8 +1,20 @@
 <template>
   <div class="c--appBar">
-    <div class="c--appBar-icon-panel">
-      <img class="c--appBar-icon" src="a.svg" alt />
+    <div
+      class="c--appBar-icon-panel"
+      :style="{ 'background-color': isLoading ? 'white' : '#fd7500' }"
+    >
+      <loading
+        v-if="isLoading"
+        class="loading-container"
+        :width="38"
+        :height="40"
+        :active.sync="isLoading"
+        :is-full-page="false"
+      ></loading>
+      <img v-else class="c--appBar-icon" src="a.svg" alt />
     </div>
+
     <div class="c--appBar-header-panel">
       <div class="c--appBar-header">
         <input type="text" v-model="title" placeholder="untitled" class="c--appBar-header-input" />
@@ -33,7 +45,8 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import Loading from 'vue-loading-overlay'
+import { mapState, mapMutations } from 'vuex'
 import { eventBus } from './bus'
 import { setInitialData } from '../helpers/typesUtils'
 import debounce from 'debounce'
@@ -41,6 +54,9 @@ export default {
   data: () => ({
     title: '',
   }),
+  components: {
+    Loading,
+  },
   mounted() {
     eventBus.$on(setInitialData, data => {
       this.title = data.title
@@ -49,6 +65,7 @@ export default {
   props: {
     save: Function,
   },
+  computed: mapState(['isLoading']),
   methods: {
     ...mapMutations(['setCustomizeIsOpen', 'setNoteTitle']),
   },
@@ -71,7 +88,7 @@ export default {
 .c--appBar-icon-panel {
   width: 40px;
   height: 40px;
-  background-color: #fd7500;
+  background-color: ;
   border-radius: 25px;
 }
 
@@ -120,5 +137,12 @@ export default {
   .c--appBar-header-input {
     width: 150px;
   }
+  .c--appBar-header-panel {
+  }
+}
+
+.loading-container {
+  width: 10px;
+  height: 10px;
 }
 </style>

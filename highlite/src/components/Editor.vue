@@ -195,6 +195,7 @@ export default {
 
   mounted() {
     this.editor.on('update', ({ getHTML, getJSON }) => {
+      this.setIsLoading(true)
       this.setEditorDatas(getJSON())
     })
 
@@ -217,6 +218,7 @@ export default {
       'toggleLinkPanel',
       'toggleHeadingPanel',
       'setEditorDatas',
+      'setIsLoading',
     ]),
   },
 }

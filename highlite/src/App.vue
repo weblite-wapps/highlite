@@ -15,7 +15,7 @@
 
 <script>
 // <Drawer />
-
+import debounce from 'debounce'
 import AppBar from './components/TheAppBar'
 import Drawer from './components/TheDrawer'
 import Editor from './components/Editor'
@@ -37,16 +37,23 @@ export default {
     CustomizeToolbar,
   },
   data: () => ({}),
-  computed: mapState(['wisId', 'userId', 'title', 'content']),
+  computed: {
+    ...mapState(['wisId', 'userId', 'title', 'content', 'isLoading']),
+    noteData() {
+      return this.title + JSON.stringify(this.content)
+    },
+  },
   created() {
     W && webliteApi(this)
     this.fetch()
   },
   methods: {
+    ...mapMutations(['setIsLoading']),
     update() {
-      update(this.wisId, this.title, JSON.stringify(this.content)).then(res =>
-        console.log(res),
-      )
+      update(this.wisId, this.title, JSON.stringify(this.content)).then(res => {
+        this.setIsLoading(false)
+        // console.log(res)
+      })
     },
 
     handleFetch(data) {
@@ -59,6 +66,14 @@ export default {
 
     fetch() {
       fetch(this.wisId).then(res => this.handleFetch(res))
+    },
+  },
+  watch: {
+    noteData: debounce(function() {
+      this.update()
+    }, 300),
+    isLoading() {
+      console.log(this.isLoading)
     },
   },
 }

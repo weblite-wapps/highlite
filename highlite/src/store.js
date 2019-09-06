@@ -25,6 +25,7 @@ export default new Vuex.Store({
     ],
     customizeIsOpen: false,
     title: 'undefined',
+    isLoading: false,
   },
   mutations: {
     toggleColorPanel(state) {
@@ -60,6 +61,9 @@ export default new Vuex.Store({
     changeWebliteRelatedData(state, { wisId, userId }) {
       state.wisId = wisId
       state.userId = userId
+    },
+    setIsLoading(state, value) {
+      state.isLoading = value
     },
   },
 
