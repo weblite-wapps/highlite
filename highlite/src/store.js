@@ -5,7 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    wisId: 'w1',
+    wisId: '',
     userId: '',
     colorPanelIsOpen: false,
     linkPanelIsOpen: false,

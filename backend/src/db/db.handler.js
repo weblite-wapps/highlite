@@ -26,7 +26,6 @@ const fetchNote = ({ wisId }) => {
 }
 
 const updateNote = async ({ wisId, title, content }) => {
-  console.log(wisId, title, content)
   return await db.run(
     `UPDATE note SET title = '${title}' , content = '${content}' WHERE wisId = '${wisId}'`,
     err => {

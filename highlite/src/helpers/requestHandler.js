@@ -8,7 +8,6 @@ export const save = (wisId, userId) =>
     .post(`${config.server}/saveNote`)
     .set('Access-Control-Allow-Origin', '*')
     .send({ wisId, userId })
-    .then(logger)
     .catch(logger)
 
 export const update = (wisId, title, content) =>
@@ -16,7 +15,6 @@ export const update = (wisId, title, content) =>
     .post(`${config.server}/updateNote`)
     .set('Access-Control-Allow-Origin', '*')
     .send({ wisId, title, content })
-    .then(logger)
     .catch(logger)
 
 export const fetch = wisId =>

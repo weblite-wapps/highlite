@@ -67,12 +67,13 @@ export default {
   },
   computed: mapState(['isLoading']),
   methods: {
-    ...mapMutations(['setCustomizeIsOpen', 'setNoteTitle']),
+    ...mapMutations(['setCustomizeIsOpen', 'setNoteTitle', 'setIsLoading']),
   },
   watch: {
     title: debounce(function() {
       this.setNoteTitle(this.title)
-    }, 300),
+      this.setIsLoading(true)
+    }, 100),
   },
 }
 </script>

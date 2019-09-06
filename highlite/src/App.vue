@@ -45,7 +45,6 @@ export default {
   },
   created() {
     W && webliteApi(this)
-    this.fetch()
   },
   methods: {
     ...mapMutations(['setIsLoading']),
@@ -72,8 +71,8 @@ export default {
     noteData: debounce(function() {
       this.update()
     }, 300),
-    isLoading() {
-      console.log(this.isLoading)
+    wisId() {
+      this.fetch()
     },
   },
 }
@@ -87,7 +86,6 @@ export default {
   width: 100%;
   height: 100vh;
   background: #ffffff 0% 0% no-repeat padding-box;
-  border: 1px solid red;
   opacity: 1;
 }
 
