@@ -5,15 +5,13 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    wisId: 'wis1',
-    userId: 'user1',
+    wisId: 'w1',
+    userId: '',
     colorPanelIsOpen: false,
-    hedingPanelIsOpen: false,
+    linkPanelIsOpen: false,
+    headingPanelIsOpen: false,
     drawerIsOpen: false,
-    text: '',
     content: null,
-    editorRange: {},
-    editorFormats: {},
     customizeArray: [
       { title: 'Header', able: true },
       { title: 'Bold', able: true },
@@ -26,33 +24,42 @@ export default new Vuex.Store({
       { title: 'Image', able: false },
     ],
     customizeIsOpen: false,
+    title: 'undefined',
   },
   mutations: {
     toggleColorPanel(state) {
+      state.linkPanelIsOpen = false
+      state.headingPanelIsOpen = false
       state.colorPanelIsOpen = !state.colorPanelIsOpen
     },
+    toggleLinkPanel(state) {
+      state.colorPanelIsOpen = false
+      state.headingPanelIsOpen = false
+      state.linkPanelIsOpen = !state.linkPanelIsOpen
+    },
     toggleHeadingPanel(state) {
-      state.hedingPanelIsOpen = !state.hedingPanelIsOpen
+      state.colorPanelIsOpen = false
+      state.linkPanelIsOpen = false
+      state.headingPanelIsOpen = !state.headingPanelIsOpen
     },
     toggleDrawer(state) {
-      console.log('drawer changed')
       state.drawerIsOpen = !state.drawerIsOpen
     },
-    updateCursorPosition(state, { index, length }) {
-      state.editorRange = { index, length }
-    },
-    setEditorFormats(state, formats) {
-      state.editorFormats = formats
-    },
-    setEditorDatas(state, data) {
-      state.text = data.text
-      state.content = data.content
+    setEditorDatas(state, content) {
+      state.content = content
     },
     setCustomizeArray(state, arr) {
       state.customizeArray = arr
     },
     setCustomizeIsOpen(state, value) {
       state.customizeIsOpen = value
+    },
+    setNoteTitle(state, title) {
+      state.title = title
+    },
+    changeWebliteRelatedData(state, { wisId, userId }) {
+      state.wisId = wisId
+      state.userId = userId
     },
   },
 

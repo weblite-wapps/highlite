@@ -1,31 +1,21 @@
 <template >
-  <v-container v-if="hedingPanelIsOpen" justify-space-between>
-    <v-row no-gutters>
-      <v-col cols="3">
-        <v-btn height="40" width="40" fab dark color="#BEBEBE">
-          <v-icon @click="this.toggleDrawer" mr-1>menu</v-icon>
-        </v-btn>
-      </v-col>
-
-      <v-col cols="3">
-        <v-btn fab max-height="40" max-width="90" dark color="#BEBEBE">ADD</v-btn>
-      </v-col>
-
-      <v-col cols="3">
-        <v-btn fab max-height="40" max-width="90" dark color="#BEBEBE">PREV</v-btn>
-      </v-col>
-      <v-col cols="3">
-        <v-btn fab max-height="40" max-width="90" dark color="#BEBEBE">NEXT</v-btn>
-      </v-col>
-    </v-row>
-  </v-container>
+  <div v-if="this.headingPanelIsOpen" class="heading-container">
+    <button class="toolbar-btn" @click="this.toggleDrawer">
+      <img src="../../public/menu.svg" />
+    </button>
+    <button class="stretched-toolbar-btn" @click="commands.heading({ level: 2 })">ADD</button>
+    <button class="stretched-toolbar-btn">PREV</button>
+    <button class="stretched-toolbar-btn">NEXT</button>
+  </div>
 </template>
 <script>
 import { mapState, mapMutations } from 'vuex'
 export default {
   data: () => ({}),
-  props: {},
-  computed: mapState(['hedingPanelIsOpen']),
+  props: {
+    commands: Object,
+  },
+  computed: mapState(['headingPanelIsOpen']),
   methods: {
     ...mapMutations(['toggleDrawer']),
   },
@@ -33,4 +23,34 @@ export default {
 </script>
 
 <style  scoped>
+button:focus {
+  outline: 0;
+}
+.heading-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+.toolbar-btn {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  background: #bebebe 0% 0% no-repeat padding-box;
+  opacity: 1;
+  display: inline-block;
+}
+/* to fix svg icons positions */
+.toolbar-btn img {
+  margin-top: 6px;
+}
+.stretched-toolbar-btn {
+  min-width: 80px;
+  height: 40px;
+  border-radius: 20px;
+  background: #bebebe 0% 0% no-repeat padding-box;
+  opacity: 1;
+  color: white;
+  text-align: center;
+}
 </style>

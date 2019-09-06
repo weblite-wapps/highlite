@@ -1,20 +1,22 @@
-const { saveNote, fetchNote } = require('../db/db.handler')
-const bodyParser = require('koa-body')()
+const { saveNote, fetchNote, updateNote } = require('../db/db.handler')
 
 module.exports = ({ router }) => {
-  router.post('/saveNote', (ctx, next) => {
-    // console.log('ctx.request.body', ctx.request.body)
-    // console.log('ctx.request.body.text', ctx.request.body.userId)
-    // console.log('ctx.request.body.text', typeof ctx.request.body.userId)
-
+  router.post('/saveNote', ctx => {
     saveNote(ctx.request.body)
-    // ctx.body = ctx.request.body.text
+      .then(() => (ctx.body = 'success'))
+      .catch(console.log)
   })
 
-  router.get('/fetchNote', (ctx, next) =>
+  router.post('/updateNote', ctx => {
+    console.log(ctx.request.body)
+    updateNote(ctx.request.body)
+      .then(() => (ctx.body = 'success'))
+      .catch(console.log)
+  })
+
+  router.get('/fetchNote', ctx =>
     fetchNote(ctx.query)
       .then(res => {
-        console.log(typeof res.content)
         ctx.body = res
       })
       .catch(console.log),

@@ -1,55 +1,64 @@
 <template  >
-  <div class="app">
-    <div class="content">
-      <CustomizeToolbar />
-      <AppBar :save="save" />
-      <ToolBar />
-      <Editor />
-      <Drawer />
-      <v-btn @click="save">save</v-btn>
+  <v-app>
+    <div class="app">
+      <div class="content">
+        <CustomizeToolbar />
+        <AppBar :save="update" />
+        <!-- <ToolBar /> -->
+        <Editor />
+        <Drawer />
+      </div>
     </div>
-  </div>
+  </v-app>
 </template>
 
 
 <script>
 // <Drawer />
+
 import AppBar from './components/TheAppBar'
-import ToolBar from './components/TheToolBar'
 import Drawer from './components/TheDrawer'
 import Editor from './components/Editor'
 import CustomizeToolbar from './components/TheCustomizeToolbar'
 import store from './store'
-import { save, fetch } from './helpers/requestHandler'
+import { save, fetch, update } from './helpers/requestHandler'
 import { mapState, mapMutations } from 'vuex'
 import { eventBus } from './components/bus'
 import { setInitialData } from './helpers/typesUtils'
+import webliteApi from './helpers/weblite.api'
+const { W } = window
 export default {
   name: 'App',
   store,
   components: {
     AppBar,
-    ToolBar,
     Drawer,
     Editor,
     CustomizeToolbar,
   },
   data: () => ({}),
-  computed: mapState(['wisId', 'userId', 'text', 'content', 'drawerIsOpen']),
+  computed: mapState(['wisId', 'userId', 'title', 'content']),
   created() {
-    // this.fetch()
+    W && webliteApi(this)
+    this.fetch()
   },
   methods: {
-    save() {
-      save(
-        this.wisId,
-        this.userId,
-        this.text,
-        JSON.stringify(this.content),
-      ).then(res => console.log(res))
+    update() {
+      update(this.wisId, this.title, JSON.stringify(this.content)).then(res =>
+        console.log(res),
+      )
     },
+
+    handleFetch(data) {
+      if (data) {
+        eventBus.$emit(setInitialData, data)
+      } else {
+        save(this.wisId, this.userId)
+      }
+    },
+
     fetch() {
-      fetch(this.wisId).then(res => eventBus.$emit(setInitialData, res))
+      fetch(this.wisId).then(res => this.handleFetch(res))
     },
   },
 }
@@ -60,9 +69,7 @@ export default {
 
 <style  scoped>
 .app {
-  top: 0px;
-  left: 0px;
-  width: 375px;
+  width: 100%;
   height: 100vh;
   background: #ffffff 0% 0% no-repeat padding-box;
   border: 1px solid red;
@@ -70,7 +77,7 @@ export default {
 }
 
 .content {
-  margin-left: 18px;
+  margin: 0px 10px 0px 10px;
   height: 100%;
   display: flex;
   flex-direction: column;
