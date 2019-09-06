@@ -199,7 +199,10 @@ export default {
     })
 
     eventBus.$on(setInitialData, data => {
-      this.editor.setContent(JSON.parse(data.content))
+      if (data.content) {
+        this.editor.setContent(JSON.parse(data.content))
+        this.setEditorDatas(JSON.parse(data.content))
+      }
     })
   },
   beforeDestroy() {

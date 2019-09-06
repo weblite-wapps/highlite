@@ -5,8 +5,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    wisId: 'wis1',
-    userId: 'user1',
+    wisId: 'w1',
+    userId: '',
     colorPanelIsOpen: false,
     linkPanelIsOpen: false,
     headingPanelIsOpen: false,
@@ -24,7 +24,7 @@ export default new Vuex.Store({
       { title: 'Image', able: false },
     ],
     customizeIsOpen: false,
-    title: '',
+    title: 'undefined',
   },
   mutations: {
     toggleColorPanel(state) {
@@ -56,6 +56,10 @@ export default new Vuex.Store({
     },
     setNoteTitle(state, title) {
       state.title = title
+    },
+    changeWebliteRelatedData(state, { wisId, userId }) {
+      state.wisId = wisId
+      state.userId = userId
     },
   },
 

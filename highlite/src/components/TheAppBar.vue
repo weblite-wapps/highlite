@@ -42,7 +42,9 @@ export default {
     title: '',
   }),
   mounted() {
-    eventBus.$on(setInitialData, data => (this.title = data.title))
+    eventBus.$on(setInitialData, data => {
+      this.title = data.title
+    })
   },
   props: {
     save: Function,
@@ -111,6 +113,12 @@ export default {
 }
 ::placeholder {
   color: #ffffff;
-  font: Bold 20px/26px Roboto;
+  font: Bold 16px Roboto;
+}
+
+@media only screen and (max-width: 349px) {
+  .c--appBar-header-input {
+    width: 150px;
+  }
 }
 </style>
