@@ -9,7 +9,8 @@
   "userInfo": true,
   "fullscreen": true,
   "servIndexes": {
-    "main": "index"
+    "main": "index",
+    "fullscreen": "index"
   },
-  "version": "0.1.1"
+  "version": "0.1.2"
 }
