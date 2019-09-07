@@ -8,7 +8,6 @@ module.exports = ({ router }) => {
   })
 
   router.post('/updateNote', ctx => {
-    console.log(ctx.request.body)
     updateNote(ctx.request.body)
       .then(() => (ctx.body = 'success'))
       .catch(console.log)
