@@ -64,6 +64,13 @@
             <img src="../../public/007-link.svg" />
           </button>
 
+          <button v-if="customizeArray[7].able" class="toolbar-btn ql-link" @click="commands.undo">
+            <img src="../../public/undo.svg" />
+          </button>
+
+          <button v-if="customizeArray[8].able" class="toolbar-btn ql-link" @click="commands.redo">
+            <img src="../../public/redo.svg" />
+          </button>
           <!-- start todolist -->
           <!-- <button
             v-if="customizeArray[6].able"
@@ -250,7 +257,6 @@ export default {
   opacity: 1;
   display: inline-block;
   min-width: 35px;
-  margin-right: 9px;
   margin-bottom: 10px;
 }
 .inner-color {
@@ -289,7 +295,6 @@ div:focus {
 
 @media only screen and (min-width: 300px) and (max-width: 329px) {
   .toolbar-container {
-    justify-content: space-around;
     overflow-x: hidden;
   }
   .toolbar-btn {
@@ -298,12 +303,16 @@ div:focus {
     margin-right: auto;
     margin-left: auto;
   }
-  .toolbar-btn img {
-  }
 }
 @media only screen and (min-width: 330px) {
   .toolbar-container {
     justify-content: space-around;
+  }
+}
+
+@media only screen and (min-width: 400px) {
+  .toolbar-btn {
+    margin-right: 9px;
   }
 }
 
