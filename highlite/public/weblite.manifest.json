@@ -2,13 +2,14 @@
   "name": "Highlite-alpha",
   "id": "5d728ec080a8d2015d1795aa",
   "searchable": true,
-  "instancable": true,
+  "instantiable": true,
   "inline": false,
   "creator": false,
   "shareDB": false,
   "userInfo": true,
+  "fullscreen": true,
   "servIndexes": {
     "main": "index"
   },
-  "version": "0.1.0"
+  "version": "0.1.1"
 }
