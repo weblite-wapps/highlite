@@ -9,6 +9,7 @@
         class="loading-container"
         :width="38"
         :height="40"
+        color="#fd7500"
         :active.sync="isLoading"
         :is-full-page="false"
       ></loading>
