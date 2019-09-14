@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="editor-container">
     <editor-menu-bar :editor="editor" v-slot="{ commands, isActive, getMarkAttrs }">
       <div>
         <div class="toolbar-container" ref="toolbar">
@@ -121,7 +121,7 @@
     <ToolBarLink :commands="this.editor.commands" />
     <v-divider></v-divider>
 
-    <editor-content dir="auto" class="editor-container" :editor="editor" />
+    <editor-content dir="auto" class="editor-panel" :editor="editor" />
   </div>
 </template>
 
@@ -317,6 +317,14 @@ div:focus {
 }
 
 .editor-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.editor-panel {
   margin-top: 5px;
+  height: 100%;
+  overflow: auto;
 }
 </style>

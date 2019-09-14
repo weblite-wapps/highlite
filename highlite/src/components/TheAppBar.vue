@@ -36,9 +36,6 @@
           <!-- <v-list-item @click="()=> {}">
             <v-list-item-title>Font Sizes</v-list-item-title>
           </v-list-item>-->
-          <!-- <v-list-item @click="save">
-            <v-list-item-title>Save</v-list-item-title>
-          </v-list-item> -->
         </v-list>
       </v-menu>
     </div>
@@ -62,9 +59,6 @@ export default {
     eventBus.$on(setInitialData, data => {
       this.title = data.title
     })
-  },
-  props: {
-    save: Function,
   },
   computed: mapState(['isLoading']),
   methods: {

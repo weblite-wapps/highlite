@@ -1,10 +1,9 @@
 <template  >
-  <v-app>
+  <v-app style="height: 100%;">
     <div class="app">
       <div class="content">
         <CustomizeToolbar />
-        <AppBar :save="update" />
-        <!-- <ToolBar /> -->
+        <AppBar />
         <Editor />
         <Drawer />
       </div>
@@ -45,6 +44,7 @@ export default {
   },
   created() {
     W && webliteApi(this)
+    !W && this.fetch()
   },
   methods: {
     ...mapMutations(['setIsLoading']),
@@ -84,7 +84,8 @@ export default {
 <style  scoped>
 .app {
   width: 100%;
-  height: 100vh;
+  height: 100%;
+  min-height: unset;
   background: #ffffff 0% 0% no-repeat padding-box;
   opacity: 1;
 }
