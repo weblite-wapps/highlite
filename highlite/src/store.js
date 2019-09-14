@@ -19,7 +19,7 @@ export default new Vuex.Store({
       { title: 'Underline', able: true },
       { title: 'Color', able: true },
       { title: 'Bullet', able: true },
-      { title: 'Link', able: true },
+      // { title: 'Link', able: true },
       // { title: 'Table', able: false },
       // { title: 'Image', able: false },
       { title: 'undo', able: true },

@@ -55,20 +55,20 @@
             <img src="../../public/006-list-1.svg" />
           </button>
 
-          <button
+          <!-- <button
             v-if="customizeArray[6].able"
             class="toolbar-btn ql-link"
             @click="toggleLinkPanel"
             :class="{ 'active': isActive.link() }"
           >
             <img src="../../public/007-link.svg" />
-          </button>
+          </button>-->
 
-          <button v-if="customizeArray[7].able" class="toolbar-btn ql-link" @click="commands.undo">
+          <button v-if="customizeArray[6].able" class="toolbar-btn ql-link" @click="commands.undo">
             <img src="../../public/undo.svg" />
           </button>
 
-          <button v-if="customizeArray[8].able" class="toolbar-btn ql-link" @click="commands.redo">
+          <button v-if="customizeArray[7].able" class="toolbar-btn ql-link" @click="commands.redo">
             <img src="../../public/redo.svg" />
           </button>
           <!-- start todolist -->

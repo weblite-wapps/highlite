@@ -49,7 +49,11 @@ export default {
   methods: {
     ...mapMutations(['setIsLoading']),
     update() {
-      update(this.wisId, this.title, JSON.stringify(this.content)).then(res => {
+      update(
+        this.wisId,
+        this.title ? this.title : 'untitled',
+        JSON.stringify(this.content),
+      ).then(res => {
         this.setIsLoading(false)
         // console.log(res)
       })
