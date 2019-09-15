@@ -1,7 +1,8 @@
 <template>
   <button class="toolbar-btn" :class="{ 'active': isActive }" @click="$emit('click')">
     <img v-if="!!imageSrc" :src="imageSrc" />
-    <div v-else class="inner-color"></div>
+    <div v-else-if="!!innerColor" class="inner-color" :style="{'background-color': innerColor}"></div>
+    <slot v-else></slot>
   </button>
 </template>
 
@@ -10,6 +11,7 @@ export default {
   props: {
     isActive: Boolean,
     imageSrc: String,
+    innerColor: String,
   },
 }
 </script>
@@ -33,6 +35,10 @@ export default {
   width: 19px;
   border-radius: 50%;
   background-color: black;
+}
+
+.c--color-input {
+  width: 20px;
 }
 
 .active {

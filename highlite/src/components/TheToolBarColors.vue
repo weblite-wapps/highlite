@@ -1,22 +1,18 @@
 <template>
   <div v-if="this.colorPanelIsOpen" class="color-container">
     <template v-for="color in colors">
-      <button class="toolbar-btn" :key="color" @click="commands.textcolor({color})">
-        <div class="inner-color" :style="{ 'background-color': color }"></div>
-      </button>
+      <ToolBarButton class="toolbar-btn" :key="color" @click="commands.textcolor({color})" :inner-color="color"/>
     </template>
-    <label class="toolbar-btn">
-      <input
+    <ToolBarButton class="toolbar-btn">
+      <input 
         type="color"
         class="c--color-input"
         @input="handleColorChange"
         v-model="customColor"
         debounce
       />
-    </label>
-    <button class="toolbar-btn" @click="this.toggleColorPanel">
-      <img src="../../public/close.svg" />
-    </button>
+    </ToolBarButton>
+    <ToolBarButton class="toolbar-btn" @click="this.toggleColorPanel" imageSrc="close.svg" />
   </div>
 </template>
 
@@ -24,15 +20,13 @@
 import debounce from 'debounce'
 import { mapState, mapMutations } from 'vuex'
 import { eventBus } from './bus'
+import ToolBarButton from './ToolBarButton'
 import { formatColor } from '../helpers/typesUtils'
 export default {
+  components:{
+    ToolBarButton,
+  },
   computed: mapState(['colorPanelIsOpen']),
-  // computed: state => state.colorPanelIsOpen,
-  // computed: {
-  //   colorPanelIsOpen() {
-  //     return this.$store.state.colorPanelIsOpen
-  //   },
-  // },
   data: () => ({
     moreColor: true,
     colors: ['#26B9E5', '#F24343', '#0DAF14', '#EFE60B', '#000000'],
@@ -82,16 +76,6 @@ label {
   display: inline-flex;
   cursor: pointer;
 }
-
-.inner-color {
-  position: relative;
-  margin-left: auto;
-  margin-right: auto;
-  height: 19px;
-  width: 19px;
-  border-radius: 50%;
-  background-color: black;
-}
 .color-container {
   display: flex;
   flex-direction: row;
@@ -100,19 +84,10 @@ label {
   margin: auto;
 }
 
-.c--color-input {
-  width: 20px;
-}
-
 @media only screen and (max-width: 250px) {
   .color-container {
     overflow-y: hidden;
     overflow-x: scroll;
-  }
-  .toolbar-btn {
-    width: auto;
-    height: auto;
-    margin-right: auto;
   }
 }
 
@@ -120,13 +95,6 @@ label {
   .color-container {
     justify-content: space-around;
     /* overflow-x: hidden; */
-  }
-
-  .toolbar-btn {
-    width: auto;
-    height: auto;
-    margin-right: auto;
-    margin-left: auto;
   }
 }
 @media only screen and (min-width: 330px) {

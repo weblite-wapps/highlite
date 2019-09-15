@@ -17,7 +17,7 @@
     </editor-menu-bar>
     <ToolBarLink :commands="this.editor.commands" />
     <v-divider></v-divider>
-    <editor-content dir="auto" class="editor-panel" :editor="editor" />
+    <editor-content class="editor-panel" :editor="editor" />
   </div>
 </template>
 
@@ -129,7 +129,7 @@ export default {
         name: 'textcolor',
         active: this.editor.isActive.textcolor,
         command: this.toggleColorPanel,
-        innerColor: '#FFFFFF',//should handle with basebutton
+        innerColor: '#000000',//should handle with basebutton
       },
       {
         name: 'bullet_list',
@@ -146,7 +146,7 @@ export default {
       {
         name: 'redo',
         active: () => false,
-        command: this.editor.commands.undo,
+        command: this.editor.commands.redo,
         imageSrc: 'redo.svg',
       },
     ]
@@ -223,12 +223,6 @@ div:focus {
 @media only screen and (min-width: 330px) {
   .toolbar-container {
     justify-content: space-around;
-  }
-}
-
-@media only screen and (min-width: 400px) {
-  .toolbar-btn {
-    margin-right: 9px;
   }
 }
 
