@@ -3,125 +3,13 @@
     <editor-menu-bar :editor="editor" v-slot="{ commands, isActive, getMarkAttrs }">
       <div>
         <div class="toolbar-container">
-          <button v-for="(tool, index) in completeToolbarArray"
+          <ToolBarButton v-for="(tool, index) in customizedToolBarArray"
             class="toolbar-btn"
             :class="{ 'active': tool.active() }"
             @click="tool.command"
-            :key="index">
-            <img :src="tool.svg"/>
-          </button>
-        </div>
-        <div class="toolbar-container" ref="toolbar">
-          <button
-            v-if="customizeArray[0].able"
-            class="toolbar-btn"
-            :class="{ 'active': isActive['heading']() }"
-            @click="commands.heading({ level: 2 })"
-          >
-            <img src="../../public/header.svg" />
-          </button>
-          <button
-            v-if="customizeArray[1].able"
-            class="toolbar-btn"
-            :class="{ 'active': isActive.bold() }"
-            @click="commands.bold"
-          >
-            <img src='../../public/bold.svg' />
-          </button>
-          <button
-            v-if="customizeArray[2].able"
-            class="toolbar-btn"
-            :class="{ 'active': isActive.italic() }"
-            @click="commands.italic"
-          >
-            <img src="../../public/italic.svg" />
-          </button>
-
-          <button
-            v-if="customizeArray[3].able"
-            class="toolbar-btn"
-            :class="{ 'active': isActive.underline() }"
-            @click="commands.underline"
-          >
-            <img src="../../public/underline.svg" />
-          </button>
-
-          <button
-            v-if="customizeArray[4].able"
-            :class="{ 'active': isActive.textcolor() }"
-            class="toolbar-btn"
-            @click="toggleColorPanel"
-          >
-            <div class="inner-color"></div>
-          </button>
-          <button
-            v-if="customizeArray[5].able"
-            class="toolbar-btn"
-            value="bullet"
-            :class="{ 'active': isActive.bullet_list() }"
-            @click="commands.bullet_list"
-          >
-            <img src="../../public/list.svg" />
-          </button>
-
-          <!-- <button
-            v-if="customizeArray[6].able"
-            class="toolbar-btn ql-link"
-            @click="toggleLinkPanel"
-            :class="{ 'active': isActive.link() }"
-          >
-            <img src="../../public/007-link.svg" />
-          </button>-->
-
-          <button v-if="customizeArray[6].able" class="toolbar-btn ql-link" @click="commands.undo">
-            <img src="../../public/undo.svg" />
-          </button>
-
-          <button v-if="customizeArray[7].able" class="toolbar-btn ql-link" @click="commands.redo">
-            <img src="../../public/redo.svg" />
-          </button>
-          <!-- start todolist -->
-          <!-- <button
-            v-if="customizeArray[6].able"
-            class="toolbar-btn ql-link"
-            @click="commands.todo_list"
-            :class="{ 'active': isActive.todo_list() }"
-          >
-            <img src="../../public/007-link.svg" />
-          </button>-->
-          <!-- end of todolist -->
-
-          <!-- <button
-            class="toolbar-btn ql-link"
-            @click="commands.createTable({rowsCount: 3, colsCount: 3, withHeaderRow: false })"
-          >
-            <img src="../../public/007-link.svg" />
-          </button>-->
-
-          <span v-if="isActive.table()">
-            <button class="menubar__button" @click="commands.deleteTable">delete_table</button>
-            <hr />
-            <button class="menubar__button" @click="commands.addColumnBefore">add_col_before</button>
-            <hr />
-            <button class="menubar__button" @click="commands.addColumnAfter">
-              <icon name="add_col_after" />
-            </button>
-            <button class="menubar__button" @click="commands.deleteColumn">
-              <icon name="delete_col" />
-            </button>
-            <button class="menubar__button" @click="commands.addRowBefore">
-              <icon name="add_row_before" />
-            </button>
-            <button class="menubar__button" @click="commands.addRowAfter">
-              <icon name="add_row_after" />
-            </button>
-            <button class="menubar__button" @click="commands.deleteRow">
-              <icon name="delete_row" />
-            </button>
-            <button class="menubar__button" @click="commands.toggleCellMerge">
-              <icon name="combine_cells" />
-            </button>
-          </span>
+            :image-src="tool.imageSrc"
+            :inner-color="tool.innerColor"
+            :key="index" />
         </div>
         <ToolBarColors :commands="commands" />
         <ToolBarHeading :commands="commands" />
@@ -129,7 +17,6 @@
     </editor-menu-bar>
     <ToolBarLink :commands="this.editor.commands" />
     <v-divider></v-divider>
-
     <editor-content dir="auto" class="editor-panel" :editor="editor" />
   </div>
 </template>
@@ -139,6 +26,7 @@ import { Editor, EditorContent, EditorMenuBar } from 'tiptap'
 import { setInitialData } from '../helpers/typesUtils'
 import ToolBarHeading from './TheToolBarHeading'
 import ToolBarColors from './TheToolBarColors'
+import ToolBarButton from './ToolBarButton'
 import { mapState, mapMutations } from 'vuex'
 import ToolBarLink from './TheToolBarLink'
 import { eventBus } from './bus'
@@ -172,6 +60,7 @@ export default {
     ToolBarColors,
     ToolBarLink,
     ToolBarHeading,
+    ToolBarButton,
     EditorContent,
     EditorMenuBar,
     Icon,
@@ -207,62 +96,59 @@ export default {
       content: ``,
       autoFocus: true,
     }),
-    completeToolbarArray: [],
+    completeToolBarArray: [],
   }),
 
   mounted() {
-    this.completeToolbarArray = [
+    this.completeToolBarArray = [
       {
         name: 'header',
         active: this.editor.isActive.heading,
         command: () => this.editor.commands.heading({ level: 2 }),
-        svg: 'header.svg',
+        imageSrc: 'header.svg',
       },
       {
         name: 'bold',
         active: this.editor.isActive.bold,
         command: this.editor.commands.bold,
-        svg: 'bold.svg',
+        imageSrc: 'bold.svg',
       },
       {
         name: 'italic',
         active: this.editor.isActive.italic,
         command: this.editor.commands.italic,
-        svg: 'italic.svg',
+        imageSrc: 'italic.svg',
       },
       {
         name: 'underline',
         active: this.editor.isActive.underline,
         command: this.editor.commands.underline,
-        svg: 'underline.svg',
+        imageSrc: 'underline.svg',
       },
       {
         name: 'textcolor',
         active: this.editor.isActive.textcolor,
         command: this.toggleColorPanel,
-        color: '#FFFFFF',//should handle with basebutton
+        innerColor: '#FFFFFF',//should handle with basebutton
       },
       {
         name: 'bullet_list',
         active: this.editor.isActive.bullet_list,
         command: this.editor.commands.bullet_list,
-        svg: 'list.svg',
+        imageSrc: 'list.svg',
       },
       {
         name: 'undo',
         active: () => false,
         command: this.editor.commands.undo,
-        svg: 'undo.svg',
+        imageSrc: 'undo.svg',
       },
       {
         name: 'redo',
         active: () => false,
         command: this.editor.commands.undo,
-        svg: 'redo.svg',
+        imageSrc: 'redo.svg',
       },
-
-      
-
     ]
     this.editor.on('update', ({ getHTML, getJSON }) => {
       this.setIsLoading(true)
@@ -281,6 +167,11 @@ export default {
   },
   computed: {
     ...mapState(['customizeArray']),
+    customizedToolBarArray(){
+      return this.completeToolBarArray.filter((tool, index)=>{
+        return this.customizeArray[index].able
+      })
+    }
   },
   methods: {
     ...mapMutations([
@@ -312,59 +203,21 @@ export default {
   overflow-y: hidden;
   overflow-x: hidden;
 }
-.toolbar-btn {
-  height: 40px;
-  width: 40px;
-  border-radius: 50%;
-  background: #bebebe 0% 0% no-repeat padding-box;
-  opacity: 1;
-  display: inline-block;
-  min-width: 35px;
-  margin-bottom: 10px;
-}
-.inner-color {
-  position: relative;
-  margin-left: auto;
-  margin-right: auto;
-  height: 19px;
-  width: 19px;
-  border-radius: 50%;
-  background-color: black;
-}
 
-.active {
-  background-color: #ffb100;
-}
-
-button,
 div:focus {
   outline: 0;
 }
-/* to fix svg icons positions */
-.toolbar-btn img {
-  margin-top: 6px;
-}
+
 @media only screen and (max-width: 300px) {
   .toolbar-container {
     overflow-y: hidden;
     overflow-x: scroll;
-  }
-  .toolbar-btn {
-    width: auto;
-    height: auto;
-    margin-right: auto;
   }
 }
 
 @media only screen and (min-width: 300px) and (max-width: 329px) {
   .toolbar-container {
     overflow-x: hidden;
-  }
-  .toolbar-btn {
-    width: auto;
-    height: auto;
-    margin-right: auto;
-    margin-left: auto;
   }
 }
 @media only screen and (min-width: 330px) {
