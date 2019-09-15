@@ -2,14 +2,23 @@
   <div class="editor-container">
     <editor-menu-bar :editor="editor" v-slot="{ commands, isActive, getMarkAttrs }">
       <div>
+        <div class="toolbar-container">
+          <button v-for="(tool, index) in completeToolbarArray"
+            class="toolbar-btn"
+            :class="{ 'active': tool.active() }"
+            @click="tool.command"
+            :key="index">
+            <img :src="tool.svg"/>
+          </button>
+        </div>
         <div class="toolbar-container" ref="toolbar">
           <button
             v-if="customizeArray[0].able"
             class="toolbar-btn"
-            :class="{ 'active': isActive.heading() }"
+            :class="{ 'active': isActive['heading']() }"
             @click="commands.heading({ level: 2 })"
           >
-            <img src="../../public/004-header.svg" />
+            <img src="../../public/header.svg" />
           </button>
           <button
             v-if="customizeArray[1].able"
@@ -17,7 +26,7 @@
             :class="{ 'active': isActive.bold() }"
             @click="commands.bold"
           >
-            <img src="../../public/002-bold-text-option.svg" />
+            <img src='../../public/bold.svg' />
           </button>
           <button
             v-if="customizeArray[2].able"
@@ -25,7 +34,7 @@
             :class="{ 'active': isActive.italic() }"
             @click="commands.italic"
           >
-            <img src="../../public/001-italicize-text.svg" />
+            <img src="../../public/italic.svg" />
           </button>
 
           <button
@@ -34,7 +43,7 @@
             :class="{ 'active': isActive.underline() }"
             @click="commands.underline"
           >
-            <img src="../../public/003-underline-text-option.svg" />
+            <img src="../../public/underline.svg" />
           </button>
 
           <button
@@ -52,7 +61,7 @@
             :class="{ 'active': isActive.bullet_list() }"
             @click="commands.bullet_list"
           >
-            <img src="../../public/006-list-1.svg" />
+            <img src="../../public/list.svg" />
           </button>
 
           <!-- <button
@@ -198,9 +207,63 @@ export default {
       content: ``,
       autoFocus: true,
     }),
+    completeToolbarArray: [],
   }),
 
   mounted() {
+    this.completeToolbarArray = [
+      {
+        name: 'header',
+        active: this.editor.isActive.heading,
+        command: () => this.editor.commands.heading({ level: 2 }),
+        svg: 'header.svg',
+      },
+      {
+        name: 'bold',
+        active: this.editor.isActive.bold,
+        command: this.editor.commands.bold,
+        svg: 'bold.svg',
+      },
+      {
+        name: 'italic',
+        active: this.editor.isActive.italic,
+        command: this.editor.commands.italic,
+        svg: 'italic.svg',
+      },
+      {
+        name: 'underline',
+        active: this.editor.isActive.underline,
+        command: this.editor.commands.underline,
+        svg: 'underline.svg',
+      },
+      {
+        name: 'textcolor',
+        active: this.editor.isActive.textcolor,
+        command: this.toggleColorPanel,
+        color: '#FFFFFF',//should handle with basebutton
+      },
+      {
+        name: 'bullet_list',
+        active: this.editor.isActive.bullet_list,
+        command: this.editor.commands.bullet_list,
+        svg: 'list.svg',
+      },
+      {
+        name: 'undo',
+        active: () => false,
+        command: this.editor.commands.undo,
+        svg: 'undo.svg',
+      },
+      {
+        name: 'redo',
+        active: () => false,
+        command: this.editor.commands.undo,
+        svg: 'redo.svg',
+      },
+
+      
+
+    ]
     this.editor.on('update', ({ getHTML, getJSON }) => {
       this.setIsLoading(true)
       this.setEditorDatas(getJSON())
