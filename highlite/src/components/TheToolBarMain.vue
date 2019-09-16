@@ -1,62 +1,57 @@
 <template>
-  <div>
-    <v-container flat>
-      <!-- <v-layout justify-space-between> -->
-      <v-btn small fab dark color="#BEBEBE" @click="() => this.emit('bold')">
-        <v-icon>format_bold</v-icon>
-      </v-btn>
-      <v-btn small fab dark color="#BEBEBE" @click="() => this.emit('italic')">
-        <v-icon mx-10>format_italic</v-icon>
-      </v-btn>
-      <v-btn small fab dark color="#BEBEBE" @click="() => this.emit('underline')">
-        <v-icon>format_underlined</v-icon>
-      </v-btn>
-      <v-btn small fab color="#BEBEBE" @click="this.toggleColorPanel">
-        <v-icon>fiber_manual_record</v-icon>
-      </v-btn>
-      <v-btn small fab dark color="#BEBEBE" @click="() => this.addEvent({list: 'bullet'})">
-        <v-icon>list</v-icon>
-      </v-btn>
-      <v-btn
-        small
-        fab
-        dark
-        color="#BEBEBE"
-        @click="() => this.addEvent({link: 'https://google.com'})"
-      >
-        <v-icon>insert_link</v-icon>
-      </v-btn>
-      <v-btn small fab dark color="#BEBEBE" @click="this.toggleHeadingPanel">
-        <v-icon>headset</v-icon>
-      </v-btn>
-      <!-- </v-layout> -->
-    </v-container>
+  <div class="toolbar-wrapper">
+    <div class="toolbar-container">
+      <ToolBarButton
+        v-for="(tool, index) in tools"
+        :class="{ 'active': tool.active() }"
+        @click="tool.command"
+        :image-src="tool.imageSrc"
+        :inner-color="tool.innerColor"
+        :key="index"
+      />
+    </div>
   </div>
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
-import { eventBus } from './bus'
-import { newEvent } from '../helpers/typesUtils'
+import ToolBarButton from './ToolBarButton'
 export default {
-  props: {},
-  methods: {
-    ...mapMutations(['toggleColorPanel', 'toggleHeadingPanel', 'addEvent']),
-    emit(event) {
-      eventBus.$emit(newEvent, event)
-    },
+  components: {
+    ToolBarButton,
   },
-  mounted() {},
-  computed: {
-    ...mapState(['editorFormats']),
-    // TODO: THIS ISBOLD SHOULD BE ADDED TO EVERY ELMENTS
-    isBold: () => {
-      // console.log('this.editorFormats ', this.editorFormats)
-      return this.editorFormats.bold ? 'dark' : ''
-    },
+  props: {
+    tools: Array,
   },
 }
 </script>
 
-<style  scoped>
+<style scoped>
+.toolbar-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  justify-content: left;
+  margin: 0px auto;
+  max-width: 500px;
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+
+@media only screen and (max-width: 300px) {
+  .toolbar-container {
+    overflow-y: hidden;
+    overflow-x: scroll;
+  }
+}
+
+@media only screen and (min-width: 300px) and (max-width: 329px) {
+  .toolbar-container {
+    overflow-x: hidden;
+  }
+}
+@media only screen and (min-width: 330px) {
+  .toolbar-container {
+    justify-content: space-around;
+  }
+}
 </style>

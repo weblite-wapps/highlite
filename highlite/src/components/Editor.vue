@@ -1,22 +1,9 @@
 <template>
   <div class="editor-container">
-    <editor-menu-bar :editor="editor" v-slot="{ commands, isActive, getMarkAttrs }">
-      <div>
-        <div class="toolbar-container">
-          <ToolBarButton v-for="(tool, index) in customizedToolBarArray"
-            :class="{ 'active': tool.active() }"
-            @click="tool.command"
-            :image-src="tool.imageSrc"
-            :inner-color="tool.innerColor"
-            :key="index" />
-        </div>
-      </div>
+    <editor-menu-bar :editor="editor">
+      <ToolBarMain :tools="customizedToolBarArray" />
     </editor-menu-bar>
-    <div class="toggleable-toolbar">
-      <ToolBarColors v-if="toggleablePanel == 'color-panel'" :commands="this.editor.commands" />
-      <ToolBarHeading v-if="toggleablePanel == 'heading-panel'" :commands="this.editor.commands" />
-      <ToolBarLink v-if="toggleablePanel == 'link-panel'" :commands="this.editor.commands" />
-    </div>
+    <ToolBarToggleable :commands="this.editor.commands"/>
     <v-divider></v-divider>
     <editor-content class="editor-panel" :editor="editor" />
   </div>
@@ -25,10 +12,8 @@
 <script>
 import { Editor, EditorContent, EditorMenuBar } from 'tiptap'
 import { setInitialData } from '../helpers/typesUtils'
-import ToolBarHeading from './TheToolBarHeading'
-import ToolBarLink from './TheToolBarLink'
-import ToolBarColors from './TheToolBarColors'
-import ToolBarButton from './ToolBarButton'
+import ToolBarMain from './TheToolBarMain'
+import ToolBarToggleable from './TheToolBarToggleable'
 import { mapState, mapMutations } from 'vuex'
 import { eventBus } from './bus'
 import Icon from './icon'
@@ -57,11 +42,9 @@ import {
 } from 'tiptap-extensions'
 import TextColor from '../helpers/TextColor'
 export default {
-  components: {
-    ToolBarColors,
-    ToolBarLink,
-    ToolBarHeading,
-    ToolBarButton,
+  components: { 
+    ToolBarMain,
+    ToolBarToggleable, 
     EditorContent,
     EditorMenuBar,
     Icon,
@@ -130,7 +113,7 @@ export default {
         name: 'textcolor',
         active: this.editor.isActive.textcolor,
         command: () => this.togglePanelTo('color-panel'),
-        innerColor: '#000000',//should handle with basebutton
+        innerColor: '#000000', //should handle with basebutton
       },
       {
         name: 'bullet_list',
@@ -167,19 +150,15 @@ export default {
     this.editor.destroy()
   },
   computed: {
-    ...mapState(['customizeArray', 'toggleablePanel']),
-    customizedToolBarArray(){
-      return this.completeToolBarArray.filter((tool, index)=>{
+    ...mapState(['customizeArray']),
+    customizedToolBarArray() {
+      return this.completeToolBarArray.filter((tool, index) => {
         return this.customizeArray[index].able
       })
-    }
+    },
   },
   methods: {
-    ...mapMutations([
-      'togglePanelTo',
-      'setEditorDatas',
-      'setIsLoading',
-    ]),
+    ...mapMutations(['togglePanelTo', 'setEditorDatas', 'setIsLoading']),
   },
 }
 </script>
@@ -190,39 +169,9 @@ export default {
   overflow-x: hidden;
   overflow-y: scroll;
 }
-.rows-container {
-  padding: 0 10px;
-}
-.toolbar-container {
-  display: flex;
-  flex-direction: row;
-  margin: 0px auto 0px auto;
-  max-width: 500px;
-  justify-content: left;
-  overflow-y: hidden;
-  overflow-x: hidden;
-}
 
 div:focus {
   outline: 0;
-}
-
-@media only screen and (max-width: 300px) {
-  .toolbar-container {
-    overflow-y: hidden;
-    overflow-x: scroll;
-  }
-}
-
-@media only screen and (min-width: 300px) and (max-width: 329px) {
-  .toolbar-container {
-    overflow-x: hidden;
-  }
-}
-@media only screen and (min-width: 330px) {
-  .toolbar-container {
-    justify-content: space-around;
-  }
 }
 
 .editor-container {
