@@ -1,5 +1,15 @@
 <template>
-  <button class="toolbar-btn" :class="{ 'active': isActive }" @click="$emit('click')">
+  <button
+    :is="isLabel? 'label': 'button'"
+    class="toolbar-btn"
+    :class="{ 'active': isActive }"
+    @click="$emit('click')"
+  >
+  <!-- 
+    for button with a svg icon send imageSrc as prop
+    for button with a inner color send innerColor as prop
+    for customize with your inner element leave send your element as slot within button tags  -->
+    
     <img v-if="!!imageSrc" :src="imageSrc" />
     <div v-else-if="!!innerColor" class="inner-color" :style="{'background-color': innerColor}"></div>
     <slot v-else></slot>
@@ -10,6 +20,7 @@
 export default {
   props: {
     isActive: Boolean,
+    isLabel: Boolean,
     imageSrc: String,
     innerColor: String,
   },
@@ -17,13 +28,23 @@ export default {
 </script>
 
 <style  scoped>
+button,
+input,
+label:focus {
+  outline: 0;
+}
+
+label input {
+  margin: auto;
+  cursor: pointer;
+}
+
 .toolbar-btn {
   height: 40px;
   width: 40px;
   border-radius: 50%;
   background: #bebebe 0% 0% no-repeat padding-box;
   opacity: 1;
-  display: inline-block;
   min-width: 35px;
   margin-bottom: 10px;
 }
@@ -35,6 +56,11 @@ export default {
   width: 19px;
   border-radius: 50%;
   background-color: black;
+}
+
+label.toolbar-btn {
+  display: inline-flex;
+  cursor: pointer;
 }
 
 .c--color-input {

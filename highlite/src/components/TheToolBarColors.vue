@@ -1,10 +1,14 @@
 <template>
   <div v-if="this.colorPanelIsOpen" class="color-container">
-    <template v-for="color in colors">
-      <ToolBarButton class="toolbar-btn" :key="color" @click="commands.textcolor({color})" :inner-color="color"/>
-    </template>
-    <ToolBarButton class="toolbar-btn">
-      <input 
+    <ToolBarButton
+      v-for="color in colors"
+      class="toolbar-btn"
+      :key="color"
+      @click="commands.textcolor({color})"
+      :inner-color="color"
+    />
+    <ToolBarButton isLabel>
+      <input
         type="color"
         class="c--color-input"
         @input="handleColorChange"
@@ -12,7 +16,7 @@
         debounce
       />
     </ToolBarButton>
-    <ToolBarButton class="toolbar-btn" @click="this.toggleColorPanel" imageSrc="close.svg" />
+    <ToolBarButton @click="this.toggleColorPanel" imageSrc="close.svg" />
   </div>
 </template>
 
@@ -23,7 +27,7 @@ import { eventBus } from './bus'
 import ToolBarButton from './ToolBarButton'
 import { formatColor } from '../helpers/typesUtils'
 export default {
-  components:{
+  components: {
     ToolBarButton,
   },
   computed: mapState(['colorPanelIsOpen']),
@@ -48,34 +52,6 @@ export default {
 </script>
 
 <style scoped>
-button,
-input,
-label:focus {
-  outline: 0;
-}
-
-label input {
-  margin: auto;
-  cursor: pointer;
-}
-/* to fix svg icons positions */
-.toolbar-btn img {
-  margin-top: 6px;
-}
-.toolbar-btn {
-  height: 40px;
-  width: 40px;
-  border-radius: 50%;
-  background: #bebebe 0% 0% no-repeat padding-box;
-  opacity: 1;
-  margin-right: 9px;
-  margin-bottom: 10px;
-  min-width: 30px;
-}
-label {
-  display: inline-flex;
-  cursor: pointer;
-}
 .color-container {
   display: flex;
   flex-direction: row;
@@ -94,7 +70,6 @@ label {
 @media only screen and (min-width: 250px) and (max-width: 329px) {
   .color-container {
     justify-content: space-around;
-    /* overflow-x: hidden; */
   }
 }
 @media only screen and (min-width: 330px) {
