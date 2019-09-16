@@ -16,7 +16,6 @@ import ToolBarMain from './TheToolBarMain'
 import ToolBarToggleable from './TheToolBarToggleable'
 import { mapState, mapMutations } from 'vuex'
 import { eventBus } from './bus'
-import Icon from './icon'
 import {
   Blockquote,
   CodeBlock,
@@ -47,7 +46,6 @@ export default {
     ToolBarToggleable, 
     EditorContent,
     EditorMenuBar,
-    Icon,
   },
   data: () => ({
     editor: new Editor({
