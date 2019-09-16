@@ -82,14 +82,13 @@ export default {
 }
 
 .c--appBar-icon-panel {
-  width: 40px;
+  min-width: 40px;
   height: 40px;
-  background-color: ;
   border-radius: 25px;
 }
 
-.c--appBar-icon {
-}
+/* .c--appBar-icon {
+} */
 
 .c--appBar-header-panel {
   background-color: #ffb100;
@@ -133,8 +132,8 @@ export default {
   .c--appBar-header-input {
     width: 150px;
   }
-  .c--appBar-header-panel {
-  }
+  /* .c--appBar-header-panel {
+  } */
 }
 
 .loading-container {
