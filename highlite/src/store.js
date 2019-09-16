@@ -7,9 +7,9 @@ export default new Vuex.Store({
   state: {
     wisId: '',
     userId: '',
-    colorPanelIsOpen: false,
-    linkPanelIsOpen: false,
-    headingPanelIsOpen: false,
+    toggleablePanel: 'closed',
+    // allowed values are: {closed, color-panel, heading-panel, link-panel}
+
     drawerIsOpen: false,
     content: null,
     customizeArray: [
@@ -30,20 +30,10 @@ export default new Vuex.Store({
     isLoading: false,
   },
   mutations: {
-    toggleColorPanel(state) {
-      state.linkPanelIsOpen = false
-      state.headingPanelIsOpen = false
-      state.colorPanelIsOpen = !state.colorPanelIsOpen
-    },
-    toggleLinkPanel(state) {
-      state.colorPanelIsOpen = false
-      state.headingPanelIsOpen = false
-      state.linkPanelIsOpen = !state.linkPanelIsOpen
-    },
-    toggleHeadingPanel(state) {
-      state.colorPanelIsOpen = false
-      state.linkPanelIsOpen = false
-      state.headingPanelIsOpen = !state.headingPanelIsOpen
+    togglePanelTo(state, panel) {
+      if(state.toggleablePanel == panel) // when targeted panel is already open
+        return state.toggleablePanel = 'closed'
+      state.toggleablePanel = panel
     },
     toggleDrawer(state) {
       state.drawerIsOpen = !state.drawerIsOpen
