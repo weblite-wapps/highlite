@@ -1,28 +1,25 @@
 <template>
-  <div v-if="this.linkPanelIsOpen">
+  <div>
     <div class="link-container">
       <input v-model="currentLink" class="text-field" type="text" placeholder="Enter Your Link" />
-      <button class="toolbar-btn" @click="() => this.commands.link({href: this.currentLink})">
-        <img src="../../public/tik.svg" />
-      </button>
-      <button class="toolbar-btn" @click="this.toggleLinkPanel">
-        <img src="../../public/close.svg" />
-      </button>
+      <ToolBarButton
+        @click="() => this.commands.link({href: this.currentLink})"
+        imageSrc="tik.svg"
+      />
+      <ToolBarButton @click="togglePanelTo('closed')" imageSrc="close.svg" />
     </div>
   </div>
 </template>
 
 <script>
 import { mapState, mapMutations } from 'vuex'
-import { eventBus } from './bus'
-import { formatLink } from '../helpers/typesUtils'
+import ToolBarButton from './ToolBarButton'
 export default {
-  computed: mapState(['linkPanelIsOpen']),
+  components: {
+    ToolBarButton,
+  },
   methods: {
-    ...mapMutations(['toggleLinkPanel']),
-    emitLink(event) {
-      eventBus.$emit(formatLink, event)
-    },
+    ...mapMutations(['togglePanelTo']),
   },
   data: () => ({
     currentLink: '',
@@ -50,20 +47,8 @@ export default {
   opacity: 1;
   padding: 0 5%;
 }
-button,
+
 input:focus {
   outline: 0;
-}
-.toolbar-btn {
-  height: 40px;
-  width: 40px;
-  border-radius: 50%;
-  background: #bebebe 0% 0% no-repeat padding-box;
-  opacity: 1;
-  display: inline-block;
-}
-/* to fix svg icons positions */
-.toolbar-btn img {
-  margin-top: 6px;
 }
 </style>

@@ -4,18 +4,19 @@
       <div>
         <div class="toolbar-container">
           <ToolBarButton v-for="(tool, index) in customizedToolBarArray"
-            class="toolbar-btn"
             :class="{ 'active': tool.active() }"
             @click="tool.command"
             :image-src="tool.imageSrc"
             :inner-color="tool.innerColor"
             :key="index" />
         </div>
-        <ToolBarColors :commands="commands" />
-        <ToolBarHeading :commands="commands" />
       </div>
     </editor-menu-bar>
-    <ToolBarLink :commands="this.editor.commands" />
+    <div class="togglable-toolbar">
+      <ToolBarColors v-if="togglablePanel == 'color-panel'" :commands="this.editor.commands" />
+      <ToolBarHeading v-if="togglablePanel == 'heading-panel'" :commands="this.editor.commands" />
+      <ToolBarLink v-if="togglablePanel == 'link-panel'" :commands="this.editor.commands" />
+    </div>
     <v-divider></v-divider>
     <editor-content class="editor-panel" :editor="editor" />
   </div>
@@ -25,10 +26,10 @@
 import { Editor, EditorContent, EditorMenuBar } from 'tiptap'
 import { setInitialData } from '../helpers/typesUtils'
 import ToolBarHeading from './TheToolBarHeading'
+import ToolBarLink from './TheToolBarLink'
 import ToolBarColors from './TheToolBarColors'
 import ToolBarButton from './ToolBarButton'
 import { mapState, mapMutations } from 'vuex'
-import ToolBarLink from './TheToolBarLink'
 import { eventBus } from './bus'
 import Icon from './icon'
 import {
@@ -128,7 +129,7 @@ export default {
       {
         name: 'textcolor',
         active: this.editor.isActive.textcolor,
-        command: this.toggleColorPanel,
+        command: () => this.togglePanelTo('color-panel'),
         innerColor: '#000000',//should handle with basebutton
       },
       {
@@ -166,7 +167,7 @@ export default {
     this.editor.destroy()
   },
   computed: {
-    ...mapState(['customizeArray']),
+    ...mapState(['customizeArray', 'togglablePanel']),
     customizedToolBarArray(){
       return this.completeToolBarArray.filter((tool, index)=>{
         return this.customizeArray[index].able
@@ -175,9 +176,7 @@ export default {
   },
   methods: {
     ...mapMutations([
-      'toggleColorPanel',
-      'toggleLinkPanel',
-      'toggleHeadingPanel',
+      'togglePanelTo',
       'setEditorDatas',
       'setIsLoading',
     ]),
