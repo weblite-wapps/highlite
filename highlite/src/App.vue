@@ -17,7 +17,7 @@
 import debounce from 'debounce'
 import AppBar from './components/TheAppBar'
 import Drawer from './components/TheDrawer'
-import Editor from './components/Editor'
+import Editor from './components/TheEditor'
 import CustomizeToolbar from './components/TheCustomizeToolbar'
 import store from './store'
 import { save, fetch, update } from './helpers/requestHandler'
