@@ -1,18 +1,14 @@
 <template >
   <div class="heading-container">
-    <ToolBarButton @click="this.toggleDrawer" imageSrc="menu.svg" />
-    <ToolBarButton stretched @click="commands.heading({ level: 2 })">ADD</ToolBarButton>
-    <ToolBarButton stretched>PREV</ToolBarButton>
-    <ToolBarButton stretched>NEXT</ToolBarButton>
+    <BaseButton @click="this.toggleDrawer" imageSrc="menu.svg" />
+    <BaseButton stretched @click="commands.heading({ level: 2 })">ADD</BaseButton>
+    <BaseButton stretched>PREV</BaseButton>
+    <BaseButton stretched>NEXT</BaseButton>
   </div>
 </template>
 <script>
 import { mapState, mapMutations } from 'vuex'
-import ToolBarButton from './ToolBarButton'
 export default {
-  components: {
-    ToolBarButton,
-  },
   data: () => ({}),
   props: {
     commands: Object,

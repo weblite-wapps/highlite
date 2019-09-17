@@ -1,19 +1,19 @@
 <template>
   <div class="editor-container">
-    <editor-menu-bar :editor="editor">
-      <ToolBarMain :tools="customizedToolBarArray" />
-    </editor-menu-bar>
-    <ToolBarToggleable :commands="this.editor.commands"/>
+    <EditorMenuBar :editor="editor">
+      <ToolBar :tools="customizedToolBarArray" />
+    </EditorMenuBar>
+    <ToggleableBar :commands="this.editor.commands"/>
     <v-divider></v-divider>
-    <editor-content class="editor-panel" :editor="editor" />
+    <EditorContent class="editor-panel" :editor="editor" />
   </div>
 </template>
 
 <script>
 import { Editor, EditorContent, EditorMenuBar } from 'tiptap'
 import { setInitialData } from '../helpers/typesUtils'
-import ToolBarMain from './TheToolBarMain'
-import ToolBarToggleable from './TheToolBarToggleable'
+import ToolBar from './TheEditorToolBar'
+import ToggleableBar from './TheEditorToggleableBar'
 import { mapState, mapMutations } from 'vuex'
 import { eventBus } from './bus'
 import {
@@ -42,8 +42,8 @@ import {
 import TextColor from '../helpers/TextColor'
 export default {
   components: { 
-    ToolBarMain,
-    ToolBarToggleable, 
+    ToolBar,
+    ToggleableBar, 
     EditorContent,
     EditorMenuBar,
   },
@@ -111,7 +111,7 @@ export default {
         name: 'textcolor',
         active: this.editor.isActive.textcolor,
         command: () => this.togglePanelTo('color-panel'),
-        innerColor: '#000000', //should handle with basebutton
+        innerColor: '#000000', //should handle with BaseButton
       },
       {
         name: 'bullet_list',

@@ -1,14 +1,13 @@
 <template>
   <button
     :is="labeled? 'label': 'button'"
-    class="toolbar-btn"
-    :class="{ 'active': isActive , 'stretched-toolbar-btn': stretched}"
+    :class="['toolbar-btn', { 'active': isActive , 'stretched-toolbar-btn': stretched}]"
     @click="$emit('click')"
   >
-  <!-- 
+    <!-- 
     for button with a svg icon send imageSrc as prop
     for button with a inner color send innerColor as prop
-    for customize with your inner element leave send your element as slot within button tags  -->
+    for customize with your inner element leave send your element as slot within button tags-->
 
     <img v-if="!!imageSrc" :src="imageSrc" />
     <div v-else-if="!!innerColor" class="inner-color" :style="{'background-color': innerColor}"></div>

@@ -4,7 +4,7 @@
       class="c--appBar-icon-panel"
       :style="{ 'background-color': isLoading ? 'white' : '#fd7500' }"
     >
-      <loading
+      <Loading
         v-if="isLoading"
         class="loading-container"
         :width="38"
@@ -12,7 +12,7 @@
         color="#fd7500"
         :active.sync="isLoading"
         :is-full-page="false"
-      ></loading>
+      ></Loading>
       <img v-else class="c--appBar-icon" src="a.svg" alt />
     </div>
 

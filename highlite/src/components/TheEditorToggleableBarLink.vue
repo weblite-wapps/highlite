@@ -2,22 +2,18 @@
   <div>
     <div class="link-container">
       <input v-model="currentLink" class="text-field" type="text" placeholder="Enter Your Link" />
-      <ToolBarButton
+      <BaseButton
         @click="() => this.commands.link({href: this.currentLink})"
         imageSrc="tik.svg"
       />
-      <ToolBarButton @click="togglePanelTo('closed')" imageSrc="close.svg" />
+      <BaseButton @click="togglePanelTo('closed')" imageSrc="close.svg" />
     </div>
   </div>
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
-import ToolBarButton from './ToolBarButton'
+import { mapMutations } from 'vuex'
 export default {
-  components: {
-    ToolBarButton,
-  },
   methods: {
     ...mapMutations(['togglePanelTo']),
   },
@@ -35,12 +31,14 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-content: center;
   margin: 10px 0;
   max-width: 400px;
   margin: auto;
 }
 .text-field {
   min-width: 210px;
+  height: 40px;
   border-radius: 20px;
   background: #ffffff 0% 0% no-repeat padding-box;
   border: 3px solid #d9d9d9;

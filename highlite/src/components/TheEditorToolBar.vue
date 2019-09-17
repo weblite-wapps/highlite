@@ -1,7 +1,7 @@
 <template>
   <div class="toolbar-wrapper">
     <div class="toolbar-container">
-      <ToolBarButton
+      <BaseButton
         v-for="(tool, index) in tools"
         :class="{ 'active': tool.active() }"
         @click="tool.command"
@@ -14,11 +14,7 @@
 </template>
 
 <script>
-import ToolBarButton from './ToolBarButton'
 export default {
-  components: {
-    ToolBarButton,
-  },
   props: {
     tools: Array,
   },
