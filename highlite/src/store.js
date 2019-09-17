@@ -1,5 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import { eventBus } from './components/bus'
+import { setInitialData } from './helpers/typesUtils'
+import { save, fetch, update } from './helpers/requestHandler'
 
 Vue.use(Vuex)
 
@@ -29,9 +32,14 @@ export default new Vuex.Store({
     title: 'undefined',
     isLoading: false,
   },
+  getters: {
+    noteData(state) {
+      return state.title + JSON.stringify(state.content)
+    },
+  },
   mutations: {
     togglePanelTo(state, panel) {
-      if(state.toggleablePanel == panel) // when targeted panel is already open
+      if (state.toggleablePanel == panel) // when targeted panel is already open
         return state.toggleablePanel = 'closed'
       state.toggleablePanel = panel
     },
@@ -58,6 +66,26 @@ export default new Vuex.Store({
       state.isLoading = value
     },
   },
-
-  actions: {},
+  actions: {
+    update({ state, commit }) {
+      update(
+        state.wisId,
+        state.title ? state.title : 'untitled',
+        JSON.stringify(state.content),
+      ).then((/* res */) => {
+        commit('setIsLoading', false)
+        // console.log(res)
+      })
+    },
+    handleFetch({ state }, data) {
+      if (data) {
+        eventBus.$emit(setInitialData, data)
+      } else {
+        save(state.wisId, state.userId)
+      }
+    },
+    fetch({ state, dispatch }) {
+      fetch(state.wisId).then(res => dispatch('handleFetch', res))
+    }
+  },
 })

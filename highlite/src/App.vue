@@ -20,10 +20,7 @@ import Drawer from './components/TheDrawer'
 import Editor from './components/TheEditor'
 import CustomizeToolbar from './components/TheCustomizeToolbar'
 import store from './store'
-import { save, fetch, update } from './helpers/requestHandler'
-import { mapState, mapMutations } from 'vuex'
-import { eventBus } from './components/bus'
-import { setInitialData } from './helpers/typesUtils'
+import { mapState, mapGetters, mapActions } from 'vuex'
 import webliteApi from './helpers/weblite.api'
 const { W } = window
 export default {
@@ -37,39 +34,15 @@ export default {
   },
   data: () => ({}),
   computed: {
-    ...mapState(['wisId', 'userId', 'title', 'content', 'isLoading']),
-    noteData() {
-      return this.title + JSON.stringify(this.content)
-    },
+    ...mapState(['wisId']),
+    ...mapGetters(['noteData']),
   },
   created() {
     W && webliteApi(this)
     !W && this.fetch()
   },
   methods: {
-    ...mapMutations(['setIsLoading']),
-    update() {
-      update(
-        this.wisId,
-        this.title ? this.title : 'untitled',
-        JSON.stringify(this.content),
-      ).then(res => {
-        this.setIsLoading(false)
-        // console.log(res)
-      })
-    },
-
-    handleFetch(data) {
-      if (data) {
-        eventBus.$emit(setInitialData, data)
-      } else {
-        save(this.wisId, this.userId)
-      }
-    },
-
-    fetch() {
-      fetch(this.wisId).then(res => this.handleFetch(res))
-    },
+    ...mapActions(['update', 'fetch']),
   },
   watch: {
     noteData: debounce(function() {
