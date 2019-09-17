@@ -12,6 +12,7 @@
 <script>
 import { Editor, EditorContent, EditorMenuBar } from 'tiptap'
 import { setInitialData } from '../helpers/typesUtils'
+import getTools from '../helpers/toolBarCompleteTools.js'
 import ToolBar from './TheEditorToolBar'
 import ToggleableBar from './TheEditorToggleableBar'
 import { mapState, mapMutations } from 'vuex'
@@ -82,56 +83,7 @@ export default {
   }),
 
   mounted() {
-    this.completeToolBarArray = [
-      {
-        name: 'header',
-        active: this.editor.isActive.heading,
-        command: () => this.editor.commands.heading({ level: 2 }),
-        imageSrc: 'header.svg',
-      },
-      {
-        name: 'bold',
-        active: this.editor.isActive.bold,
-        command: this.editor.commands.bold,
-        imageSrc: 'bold.svg',
-      },
-      {
-        name: 'italic',
-        active: this.editor.isActive.italic,
-        command: this.editor.commands.italic,
-        imageSrc: 'italic.svg',
-      },
-      {
-        name: 'underline',
-        active: this.editor.isActive.underline,
-        command: this.editor.commands.underline,
-        imageSrc: 'underline.svg',
-      },
-      {
-        name: 'textcolor',
-        active: this.editor.isActive.textcolor,
-        command: () => this.togglePanelTo('color-panel'),
-        innerColor: '#000000', //should handle with BaseButton
-      },
-      {
-        name: 'bullet_list',
-        active: this.editor.isActive.bullet_list,
-        command: this.editor.commands.bullet_list,
-        imageSrc: 'list.svg',
-      },
-      {
-        name: 'undo',
-        active: () => false,
-        command: this.editor.commands.undo,
-        imageSrc: 'undo.svg',
-      },
-      {
-        name: 'redo',
-        active: () => false,
-        command: this.editor.commands.redo,
-        imageSrc: 'redo.svg',
-      },
-    ]
+    this.completeToolBarArray = getTools(this.editor)
     this.editor.on('update', ({ getHTML, getJSON }) => {
       this.setIsLoading(true)
       this.setEditorDatas(getJSON())
