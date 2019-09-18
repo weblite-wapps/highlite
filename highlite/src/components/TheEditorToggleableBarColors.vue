@@ -35,30 +35,13 @@ export default {
 </script>
 
 <style scoped>
+
 .color-container {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
-  justify-content: left;
-  max-width: 500px;
-  margin: auto;
-}
-
-@media only screen and (max-width: 250px) {
-  .color-container {
-    overflow-y: hidden;
-    overflow-x: scroll;
-  }
-}
-
-@media only screen and (min-width: 250px) and (max-width: 329px) {
-  .color-container {
-    justify-content: space-around;
-  }
-}
-@media only screen and (min-width: 330px) {
-  .color-container {
-    justify-content: space-around;
-  }
+  justify-content: space-between;
+  margin: auto 10px;
+  width: 100%;
+  max-width: 450px;
 }
 </style>

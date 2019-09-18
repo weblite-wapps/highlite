@@ -4,7 +4,7 @@
       <ToolBar :editor="this.editor"/>
     </EditorMenuBar>
     <ToggleableBar :commands="this.editor.commands"/>
-    <v-divider></v-divider>
+    <v-divider style="width: 100%"></v-divider>
     <EditorContent class="editor-panel" :editor="editor" />
   </div>
 </template>
@@ -117,11 +117,13 @@ div:focus {
   height: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 .editor-panel {
   margin-top: 5px;
   height: 100%;
+  width: 100%;
   overflow: auto;
 }
 </style>

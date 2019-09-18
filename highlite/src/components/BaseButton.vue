@@ -45,8 +45,7 @@ label input {
   border-radius: 50%;
   background: #bebebe 0% 0% no-repeat padding-box;
   opacity: 1;
-  min-width: 35px;
-  margin-bottom: 10px;
+  margin: 4px 0;
 }
 
 .stretched-toolbar-btn {
@@ -88,26 +87,12 @@ label.toolbar-btn {
 .toolbar-btn img {
   margin-top: 6px;
 }
-@media only screen and (max-width: 300px) {
+
+@media only screen and (max-width: 330px) {
   .toolbar-btn {
-    width: auto;
-    height: auto;
-    margin-right: auto;
+    width: 35px;
+    height: 35px;
   }
 }
 
-@media only screen and (min-width: 300px) and (max-width: 329px) {
-  .toolbar-btn {
-    width: auto;
-    height: auto;
-    margin-right: auto;
-    margin-left: auto;
-  }
-}
-
-@media only screen and (min-width: 400px) {
-  .toolbar-btn {
-    margin-right: 9px;
-  }
-}
 </style>
