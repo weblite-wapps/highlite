@@ -1,4 +1,4 @@
-export default editor => [
+export default (editor, togglePanelTo) => [
   {
     name: 'header',
     active: editor.isActive.heading,
@@ -26,9 +26,15 @@ export default editor => [
   {
     name: 'textcolor',
     active: editor.isActive.textcolor,
-    command: () => this.togglePanelTo('color-panel'),
+    command: () => togglePanelTo('color-panel'),
     innerColor: '#000000', //should handle with BaseButton
   },
+  // {
+  //   name: 'link',
+  //   active: editor.isActive.link,
+  //   command: () => togglePanelTo('link-panel'),
+  //   imageSrc: 'link.svg'
+  // },
   {
     name: 'bullet_list',
     active: editor.isActive.bullet_list,

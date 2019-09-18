@@ -83,7 +83,7 @@ export default {
   }),
 
   mounted() {
-    this.completeToolBarArray = getTools(this.editor)
+    this.completeToolBarArray = getTools(this.editor, this.togglePanelTo)
     this.editor.on('update', ({ getHTML, getJSON }) => {
       this.setIsLoading(true)
       this.setEditorDatas(getJSON())
