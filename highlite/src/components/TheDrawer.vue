@@ -18,8 +18,8 @@
 
 
 <script>
+//vuex
 import { mapState, mapMutations } from 'vuex'
-
 export default {
   data: () => ({}),
   computed: {

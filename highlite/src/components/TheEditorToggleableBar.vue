@@ -5,9 +5,11 @@
 </template>
 
 <script>
+//components
 import Heading from './TheEditorToggleableBarHeading'
 import Link from './TheEditorToggleableBarLink'
 import Colors from './TheEditorToggleableBarColors'
+//vuex
 import { mapState } from 'vuex'
 export default {
   components: {

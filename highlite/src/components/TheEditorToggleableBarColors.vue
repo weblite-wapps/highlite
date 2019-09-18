@@ -14,8 +14,10 @@
 </template>
 
 <script>
-import debounce from 'debounce'
+//vuex
 import { mapMutations } from 'vuex'
+//utils
+import debounce from 'debounce'
 export default {
   data: () => ({
     moreColor: true,

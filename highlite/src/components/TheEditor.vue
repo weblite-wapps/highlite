@@ -1,21 +1,26 @@
 <template>
   <div class="editor-container">
     <EditorMenuBar :editor="editor">
-      <ToolBar :editor="this.editor"/>
+      <ToolBar :editor="this.editor" />
     </EditorMenuBar>
-    <ToggleableBar :commands="this.editor.commands"/>
+    <ToggleableBar :commands="this.editor.commands" />
     <v-divider style="width: 100%"></v-divider>
     <EditorContent class="editor-panel" :editor="editor" />
   </div>
 </template>
 
 <script>
+//components
 import { Editor, EditorContent, EditorMenuBar } from 'tiptap'
-import { setInitialData } from '../helpers/typesUtils'
 import ToolBar from './TheEditorToolBar'
 import ToggleableBar from './TheEditorToggleableBar'
-import { mapMutations } from 'vuex'
+//event handler
 import { eventBus } from './bus'
+//vuex
+import { mapMutations } from 'vuex'
+//utils
+import TextColor from '../helpers/TextColor'
+import { setInitialData } from '../helpers/typesUtils'
 import {
   Blockquote,
   CodeBlock,
@@ -39,11 +44,10 @@ import {
   TableCell,
   TableRow,
 } from 'tiptap-extensions'
-import TextColor from '../helpers/TextColor'
 export default {
-  components: { 
+  components: {
     ToolBar,
-    ToggleableBar, 
+    ToggleableBar,
     EditorContent,
     EditorMenuBar,
   },

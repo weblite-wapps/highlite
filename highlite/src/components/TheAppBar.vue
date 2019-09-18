@@ -43,9 +43,13 @@
 </template>
 
 <script>
+//components
 import Loading from 'vue-loading-overlay'
-import { mapState, mapMutations } from 'vuex'
+//event handler
 import { eventBus } from './bus'
+//vuex
+import { mapState, mapMutations } from 'vuex'
+//utils
 import { setInitialData } from '../helpers/typesUtils'
 import debounce from 'debounce'
 export default {

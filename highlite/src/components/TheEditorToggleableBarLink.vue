@@ -12,6 +12,7 @@
 </template>
 
 <script>
+//vuex
 import { mapMutations } from 'vuex'
 export default {
   methods: {

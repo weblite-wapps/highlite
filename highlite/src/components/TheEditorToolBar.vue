@@ -12,7 +12,9 @@
 </template>
 
 <script>
+//vuex
 import { mapState, mapMutations } from 'vuex'
+//utils
 import getTools from '../helpers/editorToolsHandler.js'
 export default {
   props: {

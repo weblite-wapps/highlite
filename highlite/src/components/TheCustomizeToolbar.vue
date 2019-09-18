@@ -1,4 +1,3 @@
-
 <template>
   <div>
     <v-dialog v-model="customizeIsOpen" transition="dialog-bottom-transition" fullscreen>
@@ -23,6 +22,7 @@
 </template>
 
 <script>
+//vuex
 import { mapState, mapMutations } from 'vuex'
 export default {
   data: () => ({

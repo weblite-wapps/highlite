@@ -7,6 +7,7 @@
   </div>
 </template>
 <script>
+//vuex
 import { mapState, mapMutations } from 'vuex'
 export default {
   data: () => ({}),
