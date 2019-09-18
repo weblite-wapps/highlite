@@ -3,10 +3,12 @@ import Vuex from 'vuex'
 import { eventBus } from './components/bus'
 import { setInitialData } from './helpers/typesUtils'
 import { save, fetch, update } from './helpers/requestHandler'
-
+import autoSavePlugin from './helpers/Plugins/autoSavePlugin'
+import fetchInitialDataPlugin from './helpers/Plugins/fetchInitialDataPlugin'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+  plugins: [autoSavePlugin, fetchInitialDataPlugin],
   state: {
     wisId: '',
     userId: '',
@@ -32,15 +34,11 @@ export default new Vuex.Store({
     title: 'undefined',
     isLoading: false,
   },
-  getters: {
-    noteData(state) {
-      return state.title + JSON.stringify(state.content)
-    },
-  },
   mutations: {
     togglePanelTo(state, panel) {
-      if (state.toggleablePanel == panel) // when targeted panel is already open
-        return state.toggleablePanel = 'closed'
+      if (state.toggleablePanel == panel)
+        // when targeted panel is already open
+        return (state.toggleablePanel = 'closed')
       state.toggleablePanel = panel
     },
     toggleDrawer(state) {
@@ -86,6 +84,6 @@ export default new Vuex.Store({
     },
     fetch({ state, dispatch }) {
       fetch(state.wisId).then(res => dispatch('handleFetch', res))
-    }
+    },
   },
 })
