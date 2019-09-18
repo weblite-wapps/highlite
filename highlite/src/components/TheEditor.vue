@@ -1,7 +1,7 @@
 <template>
   <div class="editor-container">
     <EditorMenuBar :editor="editor">
-      <ToolBar :tools="customizedToolBarArray" />
+      <ToolBar :editor="this.editor"/>
     </EditorMenuBar>
     <ToggleableBar :commands="this.editor.commands"/>
     <v-divider></v-divider>
@@ -12,10 +12,9 @@
 <script>
 import { Editor, EditorContent, EditorMenuBar } from 'tiptap'
 import { setInitialData } from '../helpers/typesUtils'
-import getTools from '../helpers/toolBarCompleteTools.js'
 import ToolBar from './TheEditorToolBar'
 import ToggleableBar from './TheEditorToggleableBar'
-import { mapState, mapMutations } from 'vuex'
+import { mapMutations } from 'vuex'
 import { eventBus } from './bus'
 import {
   Blockquote,
@@ -79,11 +78,9 @@ export default {
       content: ``,
       autoFocus: true,
     }),
-    completeToolBarArray: [],
   }),
 
   mounted() {
-    this.completeToolBarArray = getTools(this.editor, this.togglePanelTo)
     this.editor.on('update', ({ getHTML, getJSON }) => {
       this.setIsLoading(true)
       this.setEditorDatas(getJSON())
@@ -99,16 +96,8 @@ export default {
   beforeDestroy() {
     this.editor.destroy()
   },
-  computed: {
-    ...mapState(['customizeArray']),
-    customizedToolBarArray() {
-      return this.completeToolBarArray.filter((tool, index) => {
-        return this.customizeArray[index].able
-      })
-    },
-  },
   methods: {
-    ...mapMutations(['togglePanelTo', 'setEditorDatas', 'setIsLoading']),
+    ...mapMutations(['setEditorDatas', 'setIsLoading']),
   },
 }
 </script>

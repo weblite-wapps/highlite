@@ -14,10 +14,19 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex'
+import getTools from '../helpers/editorToolsHandler.js'
 export default {
   props: {
-    tools: Array,
+    editor: Object,
   },
+  computed: {
+    ...mapState(['customizeArray']),
+    tools(){
+      return getTools(this.editor, this.togglePanelTo, this.customizeArray)
+    }
+  },
+  methods: mapMutations(['togglePanelTo']),
 }
 </script>
 

@@ -1,4 +1,4 @@
-export default (editor, togglePanelTo) => [
+const getAllTools = (editor, togglePanelTo) => [
   {
     name: 'header',
     active: editor.isActive.heading,
@@ -54,3 +54,9 @@ export default (editor, togglePanelTo) => [
     imageSrc: 'redo.svg',
   },
 ]
+
+export default (editor, togglePanelTo, customizeArray) => {
+  return getAllTools(editor, togglePanelTo).filter((tool, index)=>{
+    return customizeArray[index].able
+  })
+}
