@@ -1,7 +1,7 @@
 <template>
   <button
     :is="labeled? 'label': 'button'"
-    :class="['toolbar-btn', { 'active': isActive , 'stretched-toolbar-btn': stretched}]"
+    :class="['c--btn', { 'c--btn__active': isActive , 'c--btn__stretched': stretched}]"
     @click="$emit('click')"
   >
     <!-- 
@@ -10,7 +10,11 @@
     for customize with your inner element leave send your element as slot within button tags-->
 
     <img v-if="!!imageSrc" :src="imageSrc" />
-    <div v-else-if="!!innerColor" class="inner-color" :style="{'background-color': innerColor}"></div>
+    <div
+      v-else-if="!!innerColor"
+      class="c--btn-inner-color"
+      :style="{'background-color': innerColor}"
+    ></div>
     <slot v-else></slot>
   </button>
 </template>
@@ -27,19 +31,8 @@ export default {
 }
 </script>
 
-<style  scoped>
-button,
-input,
-label:focus {
-  outline: 0;
-}
-
-label input {
-  margin: auto;
-  cursor: pointer;
-}
-
-.toolbar-btn {
+<style>
+.c--btn {
   height: 40px;
   width: 40px;
   border-radius: 50%;
@@ -48,7 +41,7 @@ label input {
   margin: 4px 0;
 }
 
-.stretched-toolbar-btn {
+.c--btn__stretched {
   min-width: 80px;
   height: 40px;
   border-radius: 20px;
@@ -57,7 +50,7 @@ label input {
   color: white;
   text-align: center;
 }
-.inner-color {
+.c--btn-inner-color {
   position: relative;
   margin-left: auto;
   margin-right: auto;
@@ -67,7 +60,7 @@ label input {
   background-color: black;
 }
 
-label.toolbar-btn {
+label.c--btn {
   display: inline-flex;
   cursor: pointer;
 }
@@ -76,23 +69,19 @@ label.toolbar-btn {
   width: 20px;
 }
 
-.active {
+.c--btn__active {
   background-color: #ffb100;
 }
 
-.toolbar-btn:focus {
-  outline: 0;
-}
 /* to fix svg icons positions */
-.toolbar-btn img {
+.c--btn img {
   margin-top: 6px;
 }
 
 @media only screen and (max-width: 330px) {
-  .toolbar-btn {
+  .c--btn {
     width: 35px;
     height: 35px;
   }
 }
-
 </style>

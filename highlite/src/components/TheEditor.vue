@@ -1,11 +1,11 @@
 <template>
-  <div class="editor-container">
+  <div class="c--editor-container">
     <EditorMenuBar :editor="editor">
       <ToolBar :editor="this.editor" />
     </EditorMenuBar>
     <ToggleableBar :commands="this.editor.commands" />
-    <v-divider style="width: 100%"></v-divider>
-    <EditorContent class="editor-panel" :editor="editor" />
+    <v-divider width="100%"></v-divider>
+    <EditorContent class="c--editor-panel" :editor="editor" />
   </div>
 </template>
 
@@ -106,28 +106,18 @@ export default {
 }
 </script>
 
-<style  scoped>
-.editor-panel {
-  height: 100%;
-  overflow-x: hidden;
-  overflow-y: scroll;
-}
-
-div:focus {
-  outline: 0;
-}
-
-.editor-container {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.editor-panel {
+<style>
+.c--editor-panel {
   margin-top: 5px;
   height: 100%;
   width: 100%;
   overflow: auto;
+}
+
+.c--editor-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 </style>

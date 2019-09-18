@@ -8,7 +8,6 @@ import fetchInitialDataPlugin from './helpers/Plugins/fetchInitialDataPlugin'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  plugins: [autoSavePlugin, fetchInitialDataPlugin],
   state: {
     wisId: '',
     userId: '',
@@ -86,4 +85,5 @@ export default new Vuex.Store({
       fetch(state.wisId).then(res => dispatch('handleFetch', res))
     },
   },
+  plugins: [autoSavePlugin, fetchInitialDataPlugin],
 })

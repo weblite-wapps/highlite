@@ -1,5 +1,5 @@
 <template>
-  <div class="color-container">
+  <div class="c--color-container">
     <BaseButton
       v-for="color in colors"
       :key="color"
@@ -19,14 +19,14 @@ import { mapMutations } from 'vuex'
 //utils
 import debounce from 'debounce'
 export default {
+  props: {
+    commands: Object,
+  },
   data: () => ({
     moreColor: true,
     colors: ['#26B9E5', '#F24343', '#0DAF14', '#EFE60B', '#000000'],
     customColor: '',
   }),
-  props: {
-    commands: Object,
-  },
   methods: {
     ...mapMutations(['togglePanelTo']),
     handleColorChange: debounce(function({ target: { value } }) {
@@ -36,9 +36,8 @@ export default {
 }
 </script>
 
-<style scoped>
-
-.color-container {
+<style>
+.c--color-container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;

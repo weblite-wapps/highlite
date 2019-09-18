@@ -53,31 +53,31 @@ import { mapState, mapMutations } from 'vuex'
 import { setInitialData } from '../helpers/typesUtils'
 import debounce from 'debounce'
 export default {
-  data: () => ({
-    title: '',
-  }),
   components: {
     Loading,
   },
-  mounted() {
-    eventBus.$on(setInitialData, data => {
-      this.title = data.title
-    })
-  },
+  data: () => ({
+    title: '',
+  }),
   computed: mapState(['isLoading']),
-  methods: {
-    ...mapMutations(['setCustomizeIsOpen', 'setNoteTitle', 'setIsLoading']),
-  },
   watch: {
     title: debounce(function() {
       this.setNoteTitle(this.title)
       this.setIsLoading(true)
     }, 100),
   },
+  mounted() {
+    eventBus.$on(setInitialData, data => {
+      this.title = data.title
+    })
+  },
+  methods: {
+    ...mapMutations(['setCustomizeIsOpen', 'setNoteTitle', 'setIsLoading']),
+  },
 }
 </script>
 
-<style  scoped>
+<style>
 .c--appBar {
   display: flex;
   margin: 16px 17px 15px 0px;
@@ -91,9 +91,6 @@ export default {
   border-radius: 25px;
 }
 
-/* .c--appBar-icon {
-} */
-
 .c--appBar-header-panel {
   background-color: #ffb100;
   font-size: 20px;
@@ -101,7 +98,6 @@ export default {
   height: 40px;
   border-radius: 25px;
   margin-left: 10px;
-  /* margin-top: 18px; */
   display: flex;
 }
 
@@ -124,7 +120,6 @@ export default {
 }
 
 .c--appBar-header-input {
-  /* color: white; */
   outline: none;
 }
 ::placeholder {
@@ -136,8 +131,6 @@ export default {
   .c--appBar-header-input {
     width: 150px;
   }
-  /* .c--appBar-header-panel {
-  } */
 }
 
 .loading-container {

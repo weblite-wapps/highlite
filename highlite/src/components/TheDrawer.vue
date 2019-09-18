@@ -3,12 +3,12 @@
     <v-navigation-drawer fixed :value="drawerIsOpen">
       <v-list-item>
         <v-list-item-content>
-          <v-list-item-title class="title active">App 1</v-list-item-title>
-          <v-list-item-title class="title">App 2</v-list-item-title>
-          <v-list-item-title class="title">App 3</v-list-item-title>
-          <v-list-item-title class="title">App 4</v-list-item-title>
-          <v-list-item-title class="title">App 5</v-list-item-title>
-          <v-list-item-title class="title">App 6</v-list-item-title>
+          <v-list-item-title class="c--drawer--item--title c--drawer--item--title__active">App 1</v-list-item-title>
+          <v-list-item-title class="c--drawer--item--title">App 2</v-list-item-title>
+          <v-list-item-title class="c--drawer--item--title">App 3</v-list-item-title>
+          <v-list-item-title class="c--drawer--item--title">App 4</v-list-item-title>
+          <v-list-item-title class="c--drawer--item--title">App 5</v-list-item-title>
+          <v-list-item-title class="c--drawer--item--title">App 6</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
     </v-navigation-drawer>
@@ -21,7 +21,6 @@
 //vuex
 import { mapState, mapMutations } from 'vuex'
 export default {
-  data: () => ({}),
   computed: {
     ...mapState(['drawerIsOpen']),
   },
@@ -31,8 +30,8 @@ export default {
 }
 </script>
 
-<style  scoped>
-.active {
+<style>
+.c--drawer--item--title__active {
   background-color: #d9d9d9;
 }
 </style>

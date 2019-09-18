@@ -9,6 +9,14 @@ body {
   width: 100%;
 }
 
+button,
+input,
+label,
 div:focus {
   outline: 0;
+}
+
+label input {
+  margin: auto;
+  cursor: pointer;
 }

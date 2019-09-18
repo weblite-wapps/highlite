@@ -1,9 +1,9 @@
 <template>
-  <div class="toolbar-container">
+  <div class="c--toolbar-container">
     <BaseButton
       v-for="(tool, index) in tools"
-      :class="{ 'active': tool.active() }"
       @click="tool.command"
+      :isActive="tool.active()"
       :image-src="tool.imageSrc"
       :inner-color="tool.innerColor"
       :key="index"
@@ -30,8 +30,8 @@ export default {
 }
 </script>
 
-<style scoped>
-.toolbar-container {
+<style>
+.c--toolbar-container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;

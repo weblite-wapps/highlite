@@ -56,7 +56,7 @@ const getAllTools = (editor, togglePanelTo) => [
 ]
 
 export default (editor, togglePanelTo, customizeArray) => {
-  return getAllTools(editor, togglePanelTo).filter((tool, index)=>{
-    return customizeArray[index].able
-  })
+  return getAllTools(editor, togglePanelTo).filter(
+    (tool, index) => customizeArray[index].able,
+  )
 }

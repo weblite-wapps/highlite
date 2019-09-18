@@ -1,5 +1,5 @@
 <template >
-  <div class="heading-container">
+  <div class="c--heading-container">
     <BaseButton @click="this.toggleDrawer" imageSrc="menu.svg" />
     <BaseButton stretched @click="commands.heading({ level: 2 })">ADD</BaseButton>
     <BaseButton stretched>PREV</BaseButton>
@@ -8,9 +8,8 @@
 </template>
 <script>
 //vuex
-import { mapState, mapMutations } from 'vuex'
+import { mapMutations } from 'vuex'
 export default {
-  data: () => ({}),
   props: {
     commands: Object,
   },
@@ -20,14 +19,13 @@ export default {
 }
 </script>
 
-<style  scoped>
-button:focus {
-  outline: 0;
-}
-.heading-container {
+<style>
+.c--heading-container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin: 10px 0;
+  margin: auto 10px;
+  width: 100%;
+  max-width: 450px;
 }
 </style>

@@ -1,7 +1,7 @@
 <template  >
   <v-app style="height: 100%;">
-    <div class="app">
-      <div class="content">
+    <div class="c--app">
+      <div class="c--app-content">
         <CustomizeToolbar />
         <AppBar />
         <Editor />
@@ -12,12 +12,15 @@
 </template>
 
 <script>
+//components
 import AppBar from './components/TheAppBar'
 import Drawer from './components/TheDrawer'
 import Editor from './components/TheEditor'
 import CustomizeToolbar from './components/TheCustomizeToolbar'
+//vuex
 import store from './store'
 import { mapActions } from 'vuex'
+//utils
 import webliteApi from './helpers/weblite.api'
 const { W } = window
 export default {
@@ -29,7 +32,6 @@ export default {
     Editor,
     CustomizeToolbar,
   },
-  data: () => ({}),
   created() {
     W && webliteApi(this)
     !W && this.fetch()
@@ -40,8 +42,8 @@ export default {
 }
 </script>
 
-<style  scoped>
-.app {
+<style>
+.c--app {
   width: 100%;
   height: 100%;
   min-height: unset;
@@ -49,7 +51,7 @@ export default {
   opacity: 1;
 }
 
-.content {
+.c--app-content {
   margin: 0px 10px 0px 10px;
   height: 100%;
   display: flex;
