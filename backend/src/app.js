@@ -13,7 +13,7 @@ const logger = require('koa-logger')
 // cors
 const cors = require('@koa/cors')
 app.use(cors({
-  origin: 'https://www.weblite.me'
+  origin: 'https://www.weblite.me:3000'
 }))
 
 // bodyParser
