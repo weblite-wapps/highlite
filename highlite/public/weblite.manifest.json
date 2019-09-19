@@ -1,7 +1,7 @@
 {
   "name": "Highlite",
   "id": "5d832f910182287ec6cc96fa",
-  "searchable": false,
+  "searchable": true,
   "instantiable": true,
   "inline": false,
   "creator": false,
