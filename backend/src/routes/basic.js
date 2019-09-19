@@ -3,13 +3,13 @@ const { saveNote, fetchNote, updateNote } = require('../db/db.handler')
 module.exports = ({ router }) => {
   router.post('/saveNote', ctx => {
     saveNote(ctx.request.body)
-      .then(() => (ctx.body = 'success'))
+      .then(() => (ctx.body = 'success!'))
       .catch(console.log)
   })
 
   router.post('/updateNote', ctx => {
     updateNote(ctx.request.body)
-      .then(() => (ctx.body = 'success'))
+      .then(() => (ctx.body = 'success!'))
       .catch(console.log)
   })
 
