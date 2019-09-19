@@ -1,4 +1,3 @@
-
 <template>
   <div>
     <v-dialog v-model="customizeIsOpen" transition="dialog-bottom-transition" fullscreen>
@@ -23,6 +22,7 @@
 </template>
 
 <script>
+//vuex
 import { mapState, mapMutations } from 'vuex'
 export default {
   data: () => ({
@@ -42,6 +42,9 @@ export default {
   computed: {
     ...mapState(['customizeArray', 'customizeIsOpen']),
   },
+  mounted() {
+    this.array = this.customizeArray
+  },
   methods: {
     ...mapMutations(['setCustomizeIsOpen', 'setCustomizeArray']),
     handleSubmit() {
@@ -49,13 +52,10 @@ export default {
       this.setCustomizeIsOpen(false)
     },
   },
-  mounted() {
-    this.array = this.customizeArray
-  },
 }
 </script>
 
-<style  scoped>
+<style>
 .c--cutomize-appBar {
   width: 100%;
   background-color: #505050;
@@ -84,8 +84,6 @@ export default {
   margin-left: auto;
   color: white;
   cursor: pointer;
-}
-.c--options-list {
 }
 </style>
 

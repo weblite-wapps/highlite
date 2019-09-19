@@ -1,15 +1,19 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-
+import { eventBus } from './components/bus'
+import { setInitialData } from './helpers/typesUtils'
+import { save, fetch, update } from './helpers/requestHandler'
+import autoSavePlugin from './helpers/Plugins/autoSavePlugin'
+import fetchInitialDataPlugin from './helpers/Plugins/fetchInitialDataPlugin'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
     wisId: '',
     userId: '',
-    colorPanelIsOpen: false,
-    linkPanelIsOpen: false,
-    headingPanelIsOpen: false,
+    toggleablePanel: 'closed',
+    // allowed values are: {closed, color-panel, heading-panel, link-panel}
+
     drawerIsOpen: false,
     content: null,
     customizeArray: [
@@ -30,20 +34,11 @@ export default new Vuex.Store({
     isLoading: false,
   },
   mutations: {
-    toggleColorPanel(state) {
-      state.linkPanelIsOpen = false
-      state.headingPanelIsOpen = false
-      state.colorPanelIsOpen = !state.colorPanelIsOpen
-    },
-    toggleLinkPanel(state) {
-      state.colorPanelIsOpen = false
-      state.headingPanelIsOpen = false
-      state.linkPanelIsOpen = !state.linkPanelIsOpen
-    },
-    toggleHeadingPanel(state) {
-      state.colorPanelIsOpen = false
-      state.linkPanelIsOpen = false
-      state.headingPanelIsOpen = !state.headingPanelIsOpen
+    togglePanelTo(state, panel) {
+      if (state.toggleablePanel == panel)
+        // when targeted panel is already open
+        return (state.toggleablePanel = 'closed')
+      state.toggleablePanel = panel
     },
     toggleDrawer(state) {
       state.drawerIsOpen = !state.drawerIsOpen
@@ -68,6 +63,27 @@ export default new Vuex.Store({
       state.isLoading = value
     },
   },
-
-  actions: {},
+  actions: {
+    update({ state, commit }) {
+      update(
+        state.wisId,
+        state.title ? state.title : 'untitled',
+        JSON.stringify(state.content),
+      ).then((/* res */) => {
+        commit('setIsLoading', false)
+        // console.log(res)
+      })
+    },
+    handleFetch({ state }, data) {
+      if (data) {
+        eventBus.$emit(setInitialData, data)
+      } else {
+        save(state.wisId, state.userId)
+      }
+    },
+    fetch({ state, dispatch }) {
+      fetch(state.wisId).then(res => dispatch('handleFetch', res))
+    },
+  },
+  plugins: [autoSavePlugin, fetchInitialDataPlugin],
 })

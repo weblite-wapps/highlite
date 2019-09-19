@@ -4,7 +4,7 @@
       class="c--appBar-icon-panel"
       :style="{ 'background-color': isLoading ? 'white' : '#fd7500' }"
     >
-      <loading
+      <Loading
         v-if="isLoading"
         class="loading-container"
         :width="38"
@@ -12,7 +12,7 @@
         color="#fd7500"
         :active.sync="isLoading"
         :is-full-page="false"
-      ></loading>
+      ></Loading>
       <img v-else class="c--appBar-icon" src="a.svg" alt />
     </div>
 
@@ -43,37 +43,41 @@
 </template>
 
 <script>
+//components
 import Loading from 'vue-loading-overlay'
-import { mapState, mapMutations } from 'vuex'
+//event handler
 import { eventBus } from './bus'
+//vuex
+import { mapState, mapMutations } from 'vuex'
+//utils
 import { setInitialData } from '../helpers/typesUtils'
 import debounce from 'debounce'
 export default {
-  data: () => ({
-    title: '',
-  }),
   components: {
     Loading,
   },
-  mounted() {
-    eventBus.$on(setInitialData, data => {
-      this.title = data.title
-    })
-  },
+  data: () => ({
+    title: '',
+  }),
   computed: mapState(['isLoading']),
-  methods: {
-    ...mapMutations(['setCustomizeIsOpen', 'setNoteTitle', 'setIsLoading']),
-  },
   watch: {
     title: debounce(function() {
       this.setNoteTitle(this.title)
       this.setIsLoading(true)
     }, 100),
   },
+  mounted() {
+    eventBus.$on(setInitialData, data => {
+      this.title = data.title
+    })
+  },
+  methods: {
+    ...mapMutations(['setCustomizeIsOpen', 'setNoteTitle', 'setIsLoading']),
+  },
 }
 </script>
 
-<style  scoped>
+<style>
 .c--appBar {
   display: flex;
   margin: 16px 17px 15px 0px;
@@ -82,13 +86,9 @@ export default {
 }
 
 .c--appBar-icon-panel {
-  width: 40px;
+  min-width: 40px;
   height: 40px;
-  background-color: ;
   border-radius: 25px;
-}
-
-.c--appBar-icon {
 }
 
 .c--appBar-header-panel {
@@ -98,7 +98,6 @@ export default {
   height: 40px;
   border-radius: 25px;
   margin-left: 10px;
-  /* margin-top: 18px; */
   display: flex;
 }
 
@@ -121,7 +120,6 @@ export default {
 }
 
 .c--appBar-header-input {
-  /* color: white; */
   outline: none;
 }
 ::placeholder {
@@ -132,8 +130,6 @@ export default {
 @media only screen and (max-width: 349px) {
   .c--appBar-header-input {
     width: 150px;
-  }
-  .c--appBar-header-panel {
   }
 }
 
