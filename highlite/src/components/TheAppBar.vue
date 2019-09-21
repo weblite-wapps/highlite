@@ -18,7 +18,7 @@
 
     <div class="c--appBar-header-panel">
       <div class="c--appBar-header">
-        <input type="text" v-model="title" placeholder="untitled" class="c--appBar-header-input" />
+        <input dir="auto" type="text" v-model="title" placeholder="untitled" class="c--appBar-header-input" />
       </div>
       <v-menu transition="slide-y-transition" bottom>
         <template v-slot:activator="{ on }">

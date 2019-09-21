@@ -3,6 +3,7 @@ import App from './App.vue'
 import vuetify from './plugins/vuetify'
 
 import './style.css'
+import '../public/fontface.css'
 Vue.config.productionTip = false
 
 // Import all base components

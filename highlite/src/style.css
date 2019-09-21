@@ -20,3 +20,7 @@ label input {
   margin: auto;
   cursor: pointer;
 }
+
+body, html, input, div {
+  font-family: rtlfont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}

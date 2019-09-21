@@ -5,7 +5,7 @@
     </EditorMenuBar>
     <ToggleableBar :commands="this.editor.commands" />
     <v-divider width="100%"></v-divider>
-    <EditorContent class="c--editor-panel" :editor="editor" />
+    <EditorContent class="c--editor-panel" dir="auto" :editor="editor" />
   </div>
 </template>
 
